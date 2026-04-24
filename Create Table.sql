@@ -60,10 +60,9 @@ CREATE TABLE IF NOT EXISTS Partita (
 );
 
 CREATE TABLE IF NOT EXISTS Partecipazione (
+    id SERIAL PRIMARY KEY,
     squadra_id INT NOT NULL,
     torneo_id INT NOT NULL,
-
-    PRIMARY KEY (squadra_id, torneo_id),
 
     FOREIGN KEY (squadra_id) REFERENCES Squadra(id),
     FOREIGN KEY (torneo_id) REFERENCES Torneo(id)
