@@ -108,6 +108,4 @@ public class Giocatore {
 				&& Objects.equals(ruolo, other.ruolo) && squadra_id == other.squadra_id;
 	}
 	
-	
-	
 }
