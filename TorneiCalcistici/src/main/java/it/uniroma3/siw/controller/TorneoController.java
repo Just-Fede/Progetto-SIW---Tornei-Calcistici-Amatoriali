@@ -13,7 +13,12 @@ import it.uniroma3.siw.service.TorneoService;
 @Controller
 public class TorneoController {
 
-	private TorneoService service;
+	private final TorneoService service;
+	
+	public TorneoController(TorneoService service) 
+	{
+		this.service = service;
+	}
 	
 	@GetMapping("/tornei/{id}")
 	public String show (@PathVariable("id") int id, Model model)
@@ -28,6 +33,6 @@ public class TorneoController {
 	{
 		List<Torneo> allTornei = this.service.findAll();
 		model.addAttribute("tornei", allTornei);
-		return "movies/list";
+		return "tornei/list";
 	}
 }

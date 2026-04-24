@@ -1,10 +1,9 @@
 package it.uniroma3.siw.model;
 
-import jakarta.validation.constraints.*;
-
 import java.util.Objects;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Utente {
