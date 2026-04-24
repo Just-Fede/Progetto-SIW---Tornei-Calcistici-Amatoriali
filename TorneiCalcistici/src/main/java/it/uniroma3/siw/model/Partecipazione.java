@@ -2,8 +2,10 @@ package it.uniroma3.siw.model;
 
 import java.util.Objects;
 
+import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 
+@Entity
 public class Partecipazione {
 
 	@NotBlank
