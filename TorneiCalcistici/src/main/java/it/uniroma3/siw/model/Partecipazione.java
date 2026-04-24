@@ -1,57 +1,51 @@
 package it.uniroma3.siw.model;
 
+import jakarta.persistence.*;
 import java.util.Objects;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Partecipazione {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	
-	@NotBlank
-	private int squadra_id;
-	
-	@NotBlank
-	private int torneo_id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
 
-	public int getSquadra_id() {
-		return squadra_id;
-	}
+    @ManyToOne
+    private Squadra squadra;
 
-	public void setSquadra_id(int squadra_id) {
-		this.squadra_id = squadra_id;
-	}
+    @ManyToOne
+    private Torneo torneo;
 
-	public int getTorneo_id() {
-		return torneo_id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setTorneo_id(int torneo_id) {
-		this.torneo_id = torneo_id;
-	}
+    public Squadra getSquadra() {
+        return squadra;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(squadra_id, torneo_id);
-	}
+    public void setSquadra(Squadra squadra) {
+        this.squadra = squadra;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Partecipazione other = (Partecipazione) obj;
-		return squadra_id == other.squadra_id && torneo_id == other.torneo_id;
-	}
-	
+    public Torneo getTorneo() {
+        return torneo;
+    }
+
+    public void setTorneo(Torneo torneo) {
+        this.torneo = torneo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Partecipazione other = (Partecipazione) obj;
+        return id == other.id;
+    }
 }

@@ -1,9 +1,22 @@
 package it.uniroma3.siw.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
-import it.uniroma3.siw.model.Partecipazione;
+import it.uniroma3.siw.model.*;
+import java.util.*;
 
-public interface PartecipazioneRepository extends CrudRepository<Partecipazione,Integer>{
+@Repository
+public interface PartecipazioneRepository
+        extends JpaRepository<Partecipazione, Integer> {
 
+    @Query("""
+        SELECT s
+        FROM Partecipazione p
+        JOIN p.squadra s
+        WHERE p.torneo.id = :id
+    """)
+    List<Squadra> findSquadreByTorneo(@Param("id") Integer id);
 }

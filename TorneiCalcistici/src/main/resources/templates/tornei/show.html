@@ -1,56 +1,74 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Dettagli Torneo</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f5f5f5;
-        }
+	<meta charset="UTF-8">
+	<title>Dettagli Torneo</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			margin: 40px;
+			background-color: #f5f5f5;
+		}
 
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-        }
+		.container {
+			background: white;
+			padding: 20px;
+			border-radius: 10px;
+			max-width: 600px;
+		}
 
-        h1 {
-            margin-bottom: 20px;
-        }
+		h1 {
+			margin-bottom: 20px;
+		}
 
-        .field {
-            margin-bottom: 10px;
-        }
+		.field {
+			margin-bottom: 10px;
+		}
 
-        .label {
-            font-weight: bold;
-        }
-    </style>
+		.label {
+			font-weight: bold;
+		}
+	</style>
 </head>
+
 <body>
 
-<div class="container" th:if = "${torneo}">
-    <h1>Dettagli Torneo</h1>
+	<div class="container" th:if="${torneo}">
+		<h1>Dettagli Torneo</h1>
 
-    <div class="field">
-        <span class="label">Nome:</span>
-        <span th:text = "${torneo.nome}">Nome Torneo</span>
-    </div>
+		<div class="field">
+			<span class="label">Nome:</span>
+			<span th:text="${torneo.nome}">Nome Torneo</span>
+		</div>
 
-    <div class="field">
-        <span class="label">Anno:</span>
-        <span th:text = "${torneo.anno}">anno</span>
-    </div>
+		<div class="field">
+			<span class="label">Anno:</span>
+			<span th:text="${torneo.anno}">anno</span>
+		</div>
 
-    <div class="field">
-        <span class="label">Descrizione:</span>
-        <p th:text = "${torneo.descrizione}">Qui va la descrizione del torneo.</p>
-    </div>
+		<div class="field">
+			<span class="label">Descrizione:</span>
+			<p th:text="${torneo.descrizione}">Qui va la descrizione del torneo.</p>
+		</div>
 
-</div>
+	</div>
+
+	<div class="field">
+		<h2>Squadre partecipanti</h2>
+
+		<div th:if="${#lists.isEmpty(squadre)}">
+			Nessuna squadra iscritta
+		</div>
+
+		<ul>
+			<li th:each="s : ${squadre}">
+				<span th:text="${s.nome}"></span> -
+				<span th:text="${s.citta}"></span>
+			</li>
+		</ul>
+	</div>
 
 </body>
+
 </html>
