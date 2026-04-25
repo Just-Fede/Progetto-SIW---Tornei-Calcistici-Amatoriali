@@ -55,7 +55,7 @@ public class Utente {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, password, ruolo, username);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -67,9 +67,10 @@ public class Utente {
 		if (getClass() != obj.getClass())
 			return false;
 		Utente other = (Utente) obj;
-		return id == other.id && Objects.equals(password, other.password) && Objects.equals(ruolo, other.ruolo)
-				&& Objects.equals(username, other.username);
+		return id == other.id;
 	}
+
+
 	
 	
 }

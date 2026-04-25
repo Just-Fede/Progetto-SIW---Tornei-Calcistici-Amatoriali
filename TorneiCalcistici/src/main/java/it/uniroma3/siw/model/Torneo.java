@@ -1,11 +1,13 @@
 package it.uniroma3.siw.model;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -24,6 +26,9 @@ public class Torneo {
 	@NotBlank
 	private String descrizione;
 
+	@OneToMany(mappedBy = "torneo")
+	private List<Partita> partite;
+	
 	public int getId() {
 		return id;
 	}
@@ -58,7 +63,7 @@ public class Torneo {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(anno, descrizione, id, nome);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -70,10 +75,10 @@ public class Torneo {
 		if (getClass() != obj.getClass())
 			return false;
 		Torneo other = (Torneo) obj;
-		return anno == other.anno && Objects.equals(descrizione, other.descrizione) && id == other.id
-				&& Objects.equals(nome, other.nome);
+		return id == other.id;
 	}
-	
-	
+
+
+
 
 }

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Calendario Partite</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .match {
+            background: white;
+            padding: 15px;
+            margin: 10px auto;
+            width: 60%;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .teams {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .info {
+            margin-top: 5px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>📅 Calendario Partite</h1>
+
+<div th:if="${#lists.isEmpty(partite)}">
+    <p style="text-align:center;">Nessuna partita disponibile</p>
+</div>
+
+<div th:each="p : ${partite}" class="match">
+
+    <div class="teams">
+        <span th:text="${p.squadraHome.nome}">Home</span>
+        ⚔
+        <span th:text="${p.squadraAway.nome}">Away</span>
+    </div>
+
+    <div class="info">
+        📍 <span th:text="${p.luogo}">Luogo</span><br>
+
+        🕒 <span th:text="${p.dataOra}">Data</span><br>
+
+        🧑‍⚖️ Arbitro:
+        <span th:text="${p.arbitro?.nome + ' ' + p.arbitro?.cognome} ?: 'Non assegnato'"></span><br>
+
+        ⚽ Risultato:
+        <span th:text="${p.goalsHome}"></span>
+        -
+        <span th:text="${p.goalsAway}"></span>
+    </div>
+
+</div>
+
+</body>
+</html>

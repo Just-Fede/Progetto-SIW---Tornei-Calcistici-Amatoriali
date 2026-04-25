@@ -92,7 +92,7 @@ public class Giocatore {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(altezza, cognome, data_nascita, id, nome, ruolo, squadra_id);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -104,10 +104,9 @@ public class Giocatore {
 		if (getClass() != obj.getClass())
 			return false;
 		Giocatore other = (Giocatore) obj;
-		return Double.doubleToLongBits(altezza) == Double.doubleToLongBits(other.altezza)
-				&& Objects.equals(cognome, other.cognome) && Objects.equals(data_nascita, other.data_nascita)
-				&& Objects.equals(id, other.id) && Objects.equals(nome, other.nome)
-				&& Objects.equals(ruolo, other.ruolo) && squadra_id == other.squadra_id;
+		return id == other.id;
 	}
+
+
 	
 }

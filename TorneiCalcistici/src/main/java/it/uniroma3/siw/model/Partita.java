@@ -3,11 +3,10 @@ package it.uniroma3.siw.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Partita {
@@ -15,23 +14,35 @@ public class Partita {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	
-	@NotBlank
-	private LocalDateTime data_ora;
-	
-	@NotBlank
+
+	@NotNull
+	private LocalDateTime dataOra;
+
 	private String luogo;
-	
-	// Chiavi esterne
-	
-	@NotBlank
-	private int goals_home;
-	
-	@NotBlank
-	private int goals_away;
-	
-	@NotBlank
-	private int arbitro_id;
+
+	@Min(0)
+	private int goalsHome;
+
+	@Min(0)
+	private int goalsAway;
+
+	private String stato;
+
+	@ManyToOne
+	@JoinColumn(name = "torneo_id")
+	private Torneo torneo;
+
+	@ManyToOne
+	@JoinColumn(name = "squadra_home_id")
+	private Squadra squadraHome;
+
+	@ManyToOne
+	@JoinColumn(name = "squadra_away_id")
+	private Squadra squadraAway;
+
+	@ManyToOne
+	@JoinColumn(name = "arbitro_id")
+	private Arbitro arbitro;
 
 	public int getId() {
 		return id;
@@ -41,12 +52,12 @@ public class Partita {
 		this.id = id;
 	}
 
-	public LocalDateTime getData_ora() {
-		return data_ora;
+	public LocalDateTime getDataOra() {
+		return dataOra;
 	}
 
-	public void setData_ora(LocalDateTime data_ora) {
-		this.data_ora = data_ora;
+	public void setDataOra(LocalDateTime dataOra) {
+		this.dataOra = dataOra;
 	}
 
 	public String getLuogo() {
@@ -57,33 +68,65 @@ public class Partita {
 		this.luogo = luogo;
 	}
 
-	public int getGoals_home() {
-		return goals_home;
+	public int getGoalsHome() {
+		return goalsHome;
 	}
 
-	public void setGoals_home(int goals_home) {
-		this.goals_home = goals_home;
+	public void setGoalsHome(int goalsHome) {
+		this.goalsHome = goalsHome;
 	}
 
-	public int getGoals_away() {
-		return goals_away;
+	public int getGoalsAway() {
+		return goalsAway;
 	}
 
-	public void setGoals_away(int goals_away) {
-		this.goals_away = goals_away;
+	public void setGoalsAway(int goalsAway) {
+		this.goalsAway = goalsAway;
 	}
 
-	public int getArbitro_id() {
-		return arbitro_id;
+	public String getStato() {
+		return stato;
 	}
 
-	public void setArbitro_id(int arbitro_id) {
-		this.arbitro_id = arbitro_id;
+	public void setStato(String stato) {
+		this.stato = stato;
+	}
+
+	public Torneo getTorneo() {
+		return torneo;
+	}
+
+	public void setTorneo(Torneo torneo) {
+		this.torneo = torneo;
+	}
+
+	public Squadra getSquadraHome() {
+		return squadraHome;
+	}
+
+	public void setSquadraHome(Squadra squadraHome) {
+		this.squadraHome = squadraHome;
+	}
+
+	public Squadra getSquadraAway() {
+		return squadraAway;
+	}
+
+	public void setSquadraAway(Squadra squadraAway) {
+		this.squadraAway = squadraAway;
+	}
+
+	public Arbitro getArbitro() {
+		return arbitro;
+	}
+
+	public void setArbitro(Arbitro arbitro) {
+		this.arbitro = arbitro;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(arbitro_id, data_ora, goals_away, goals_home, id, luogo);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -95,10 +138,12 @@ public class Partita {
 		if (getClass() != obj.getClass())
 			return false;
 		Partita other = (Partita) obj;
-		return arbitro_id == other.arbitro_id && Objects.equals(data_ora, other.data_ora)
-				&& goals_away == other.goals_away && goals_home == other.goals_home && id == other.id
-				&& Objects.equals(luogo, other.luogo);
+		return id == other.id;
 	}
-	
+
+
+
+
 	
 }
+

@@ -59,7 +59,7 @@ public class Squadra {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(anno_fondazione, citta, id, nome);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -71,8 +71,9 @@ public class Squadra {
 		if (getClass() != obj.getClass())
 			return false;
 		Squadra other = (Squadra) obj;
-		return anno_fondazione == other.anno_fondazione && Objects.equals(citta, other.citta) && id == other.id
-				&& Objects.equals(nome, other.nome);
+		return id == other.id;
 	}
+
+
 	
 }

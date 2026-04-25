@@ -47,7 +47,7 @@ public class Arbitro {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codice_arbitrale, cognome, nome);
+		return Objects.hash(codice_arbitrale);
 	}
 
 	@Override
@@ -59,9 +59,9 @@ public class Arbitro {
 		if (getClass() != obj.getClass())
 			return false;
 		Arbitro other = (Arbitro) obj;
-		return codice_arbitrale == other.codice_arbitrale && Objects.equals(cognome, other.cognome)
-				&& Objects.equals(nome, other.nome);
+		return codice_arbitrale == other.codice_arbitrale;
 	}
+
 
 	
 	

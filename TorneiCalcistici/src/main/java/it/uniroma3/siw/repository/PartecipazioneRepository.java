@@ -12,11 +12,11 @@ import java.util.*;
 public interface PartecipazioneRepository
         extends JpaRepository<Partecipazione, Integer> {
 
-    @Query("""
-        SELECT s
-        FROM Partecipazione p
-        JOIN p.squadra s
-        WHERE p.torneo.id = :id
-    """)
-    List<Squadra> findSquadreByTorneo(@Param("id") Integer id);
+	@Query("""
+		    SELECT DISTINCT s
+		    FROM Partecipazione p
+		    JOIN p.squadra s
+		    WHERE p.torneo.id = :id
+		""")
+		List<Squadra> findSquadreByTorneo(@Param("id") Integer id);
 }

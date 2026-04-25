@@ -53,8 +53,8 @@
 		</div>
 
 	</div>
-
-	<div class="field">
+<br>
+	<div class="container">
 		<h2>Squadre partecipanti</h2>
 
 		<div th:if="${#lists.isEmpty(squadre)}">
@@ -63,12 +63,17 @@
 
 		<ul>
 			<li th:each="s : ${squadre}">
-				<span th:text="${s.nome}"></span> -
-				<span th:text="${s.citta}"></span>
+				<span th:text="${s.nome}"></span>
 			</li>
 		</ul>
 	</div>
 
+	<br>
+	
+	<a th:href="@{'/tornei/' + ${torneo.id} + '/calendario'}">
+	    📅 Vai al calendario
+	</a>
+	
 </body>
 
 </html>
