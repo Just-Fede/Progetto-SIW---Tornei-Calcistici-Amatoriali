@@ -19,8 +19,8 @@ public class Squadra {
 	@NotBlank
 	private String nome;
 	
-	@NotBlank
-	private int anno_fondazione;
+	
+	private int annoFondazione;
 	
 	@NotBlank
 	private String citta;
@@ -41,12 +41,12 @@ public class Squadra {
 		this.nome = nome;
 	}
 
-	public int getAnno_fondazione() {
-		return anno_fondazione;
+	public int getAnnoFondazione() {
+		return annoFondazione;
 	}
 
-	public void setAnno_fondazione(int anno_fondazione) {
-		this.anno_fondazione = anno_fondazione;
+	public void setAnnoFondazione(int annoFondazione) {
+		this.annoFondazione = annoFondazione;
 	}
 
 	public String getCitta() {

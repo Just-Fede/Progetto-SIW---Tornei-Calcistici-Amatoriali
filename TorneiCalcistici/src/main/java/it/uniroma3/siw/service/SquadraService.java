@@ -32,5 +32,9 @@ public class SquadraService
 	{
 		return this.repository.save(saveMe);
 	}
+
+	public SquadraRepository getRepository() {
+		return repository;
+	}
 	
 }

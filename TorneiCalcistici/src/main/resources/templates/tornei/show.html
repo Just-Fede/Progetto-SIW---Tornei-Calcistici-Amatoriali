@@ -54,19 +54,22 @@
 
 	</div>
 <br>
-	<div class="container">
-		<h2>Squadre partecipanti</h2>
 
-		<div th:if="${#lists.isEmpty(squadre)}">
-			Nessuna squadra iscritta
-		</div>
+<div class="container">
+    <h2>Squadre partecipanti</h2>
 
-		<ul>
-			<li th:each="s : ${squadre}">
-				<span th:text="${s.nome}"></span>
-			</li>
-		</ul>
-	</div>
+    <div th:if="${#lists.isEmpty(squadre)}">
+        Nessuna squadra iscritta
+    </div>
+
+    <ul>
+        <li th:each="s : ${squadre}">
+            <a th:href="@{/squadre/{id}(id=${s.id})}">
+                <span th:text="${s.nome}"></span>
+            </a>
+        </li>
+    </ul>
+</div>
 
 	<br>
 	

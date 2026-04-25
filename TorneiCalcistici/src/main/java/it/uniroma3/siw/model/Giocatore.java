@@ -32,7 +32,7 @@ public class Giocatore {
 	private double altezza;
 	
 	@NotBlank
-	private int squadra_id;
+	private int squadraId;
 
 	public int getId() {
 		return id;
@@ -82,12 +82,12 @@ public class Giocatore {
 		this.altezza = altezza;
 	}
 
-	public int getSquadra_id() {
-		return squadra_id;
+	public int getsquadraId() {
+		return squadraId;
 	}
 
-	public void setSquadra_id(int squadra_id) {
-		this.squadra_id = squadra_id;
+	public void setsquadraId(int squadraId) {
+		this.squadraId = squadraId;
 	}
 
 	@Override
