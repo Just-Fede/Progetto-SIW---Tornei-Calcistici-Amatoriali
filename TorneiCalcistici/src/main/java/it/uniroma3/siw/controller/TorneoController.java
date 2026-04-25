@@ -14,11 +14,13 @@ import it.uniroma3.siw.model.Torneo;
 import it.uniroma3.siw.service.TorneoService;
 import it.uniroma3.siw.repository.PartecipazioneRepository;
 import it.uniroma3.siw.repository.PartitaRepository;
+import it.uniroma3.siw.repository.TorneoRepository;
 
 @Controller
 public class TorneoController {
 
     private final TorneoService service;
+    private final TorneoRepository torneoRepository;
     private final PartecipazioneRepository partecipazioneRepository;
     private final PartitaRepository partitaRepository;
     
@@ -27,6 +29,7 @@ public class TorneoController {
     		PartitaRepository partitaRepository) 
     {
         this.service = service;
+        this.torneoRepository = service.getRepository();
         this.partecipazioneRepository = partecipazioneRepository;
         this.partitaRepository = partitaRepository;
     }
@@ -36,6 +39,8 @@ public class TorneoController {
 
         model.addAttribute("torneo", this.service.findById(id));
 
+        model.addAttribute("classifica", this.torneoRepository.getClassifica(id));
+        
         model.addAttribute("squadre",this.partecipazioneRepository.findSquadreByTorneo(id));
         
         return "tornei/show";

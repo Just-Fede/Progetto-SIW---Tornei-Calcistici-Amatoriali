@@ -31,5 +31,10 @@ public class TorneoService
 	{
 		return this.repository.save(saveMe);
 	}
+
+	public TorneoRepository getRepository() {
+		return repository;
+	}
+	
 	
 }

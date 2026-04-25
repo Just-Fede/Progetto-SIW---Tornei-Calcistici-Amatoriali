@@ -4,6 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Dettagli Torneo</title>
+
 	<style>
 		body {
 			font-family: Arial, sans-serif;
@@ -15,11 +16,12 @@
 			background: white;
 			padding: 20px;
 			border-radius: 10px;
-			max-width: 600px;
+			max-width: 700px;
+			margin-bottom: 20px;
 		}
 
-		h1 {
-			margin-bottom: 20px;
+		h1, h2 {
+			margin-top: 0;
 		}
 
 		.field {
@@ -28,6 +30,35 @@
 
 		.label {
 			font-weight: bold;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 10px;
+		}
+
+		th, td {
+			padding: 10px;
+			border-bottom: 1px solid #ddd;
+			text-align: center;
+		}
+
+		th {
+			background-color: #f0f0f0;
+		}
+
+		td:nth-child(2),
+		th:nth-child(2) {
+			text-align: left;
+		}
+
+		tr:hover {
+			background-color: #fafafa;
+		}
+
+		a {
+			text-decoration: none;
 		}
 	</style>
 </head>
@@ -44,39 +75,64 @@
 
 		<div class="field">
 			<span class="label">Anno:</span>
-			<span th:text="${torneo.anno}">anno</span>
+			<span th:text="${torneo.anno}">2026</span>
 		</div>
 
 		<div class="field">
 			<span class="label">Descrizione:</span>
-			<p th:text="${torneo.descrizione}">Qui va la descrizione del torneo.</p>
+			<p th:text="${torneo.descrizione}">Descrizione torneo</p>
+		</div>
+	</div>
+
+	<div class="container">
+		<h2>Squadre partecipanti</h2>
+
+		<div th:if="${#lists.isEmpty(squadre)}">
+			Nessuna squadra iscritta
 		</div>
 
+		<ul>
+			<li th:each="s : ${squadre}">
+				<a th:href="@{/squadre/{id}(id=${s.id})}">
+					<span th:text="${s.nome}"></span>
+				</a>
+			</li>
+		</ul>
 	</div>
-<br>
 
-<div class="container">
-    <h2>Squadre partecipanti</h2>
+	<div class="container">
+		<h2>Classifica</h2>
 
-    <div th:if="${#lists.isEmpty(squadre)}">
-        Nessuna squadra iscritta
-    </div>
+		<table>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Squadra</th>
+					<th>Pt</th>
+					<th>G</th>
+					<th>GF</th>
+					<th>GS</th>
+					<th>DR</th>
+				</tr>
+			</thead>
 
-    <ul>
-        <li th:each="s : ${squadre}">
-            <a th:href="@{/squadre/{id}(id=${s.id})}">
-                <span th:text="${s.nome}"></span>
-            </a>
-        </li>
-    </ul>
-</div>
+			<tbody>
+				<tr th:each="riga, stat : ${classifica}">
+					<td th:text="${stat.count}">1</td>
+					<td th:text="${riga[1]}">Squadra</td>
+					<td th:text="${riga[2]}">0</td>
+					<td th:text="${riga[3]}">0</td>
+					<td th:text="${riga[4]}">0</td>
+					<td th:text="${riga[5]}">0</td>
+					<td th:text="${riga[6]}">0</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-	<br>
-	
 	<a th:href="@{'/tornei/' + ${torneo.id} + '/calendario'}">
-	    📅 Vai al calendario
+		📅 Vai al calendario
 	</a>
-	
-</body>
 
+</body>
 </html>
