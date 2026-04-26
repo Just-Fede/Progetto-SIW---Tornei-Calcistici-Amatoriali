@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Aggiungi Torneo</title>
+
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background: #f2f4f8;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+		}
+
+		.card {
+			background: white;
+			padding: 30px;
+			border-radius: 12px;
+			width: 400px;
+			box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+		}
+
+		h1 {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+
+		label {
+			font-weight: bold;
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		input {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 15px;
+			border: 1px solid #ccc;
+			border-radius: 8px;
+			transition: 0.2s;
+		}
+
+		input:focus {
+			border-color: #4a90e2;
+			outline: none;
+		}
+
+		button {
+			width: 100%;
+			padding: 12px;
+			background: #4a90e2;
+			color: white;
+			border: none;
+			border-radius: 8px;
+			font-size: 16px;
+			cursor: pointer;
+			transition: 0.2s;
+		}
+
+		button:hover {
+			background: #357ab8;
+		}
+	</style>
+</head>
+
+<body>
+
+	<div class="card">
+
+		<h1>Nuovo Torneo</h1>
+
+		<form th:action="@{/tornei}" method="post" th:object="${torneo}">
+
+			<label>Nome torneo</label>
+			<input type="text" th:field="*{nome}" required>
+
+			<label>Anno</label>
+			<input type="number" th:field="*{anno}" required>
+
+			<label>Descrizione</label>
+			<input type="text" th:field="*{descrizione}" required>
+
+			<button type="submit">Salva torneo</button>
+
+		</form>
+
+	</div>
+
+</body>
+
+</html>

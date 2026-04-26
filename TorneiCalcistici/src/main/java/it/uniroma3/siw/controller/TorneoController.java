@@ -50,8 +50,7 @@ public class TorneoController {
     public String calendar(@PathVariable("id") int id, Model model)
     {
         Set<Partita> partite = new LinkedHashSet<>(
-            this.partitaRepository.findByTorneoId(id)
-        );
+            this.partitaRepository.findByTorneoId(id));
 
         model.addAttribute("partite", partite);
         return "tornei/calendar";

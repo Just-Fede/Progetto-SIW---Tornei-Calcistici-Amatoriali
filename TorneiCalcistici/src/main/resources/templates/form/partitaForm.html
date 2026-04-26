@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Aggiungi Partita</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef2f7;
+            display: flex;
+            justify-content: center;
+            padding: 40px 0;
+        }
+
+        .container {
+            width: 550px;
+            background: white;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 12px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            border: 1px solid #d0d7de;
+            border-radius: 8px;
+        }
+
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 12px;
+            background: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #357ab8;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Nuova Partita</h1>
+
+    <form th:action="@{/partite}" method="post" th:object="${partita}">
+
+        <label>Data e ora</label>
+        <input type="datetime-local" th:field="*{dataOra}" required>
+
+        <label>Luogo</label>
+        <input type="text" th:field="*{luogo}">
+
+        <label>Goal Home</label>
+        <input type="number" min="0" th:field="*{goalsHome}" required>
+
+        <label>Goal Away</label>
+        <input type="number" min="0" th:field="*{goalsAway}" required>
+
+		<label>Stato</label>
+		<select th:field="*{stato}" required>
+		    <option value="" disabled selected>Seleziona stato</option>
+		    <option value="PROGRAMMATA">Programm​ata</option>
+		    <option value="FINITA">Finita</option>
+		</select>
+
+        <!-- TORNEO -->
+        <label>Torneo</label>
+        <select th:field="*{torneo}" required>
+            <option value="" disabled selected>Seleziona torneo</option>
+            <option th:each="t : ${torneo}"
+                    th:value="${t.id}"
+                    th:text="${t.nome}">
+            </option>
+        </select>
+
+        <!-- HOME -->
+        <label>Squadra Casa</label>
+        <select th:field="*{squadraHome}" required>
+            <option value="" disabled selected>Seleziona squadra home</option>
+            <option th:each="s : ${squadra}"
+                    th:value="${s.id}"
+                    th:text="${s.nome}">
+            </option>
+        </select>
+
+        <!-- AWAY -->
+        <label>Squadra Ospite</label>
+        <select th:field="*{squadraAway}" required>
+            <option value="" disabled selected>Seleziona squadra away</option>
+            <option th:each="s : ${squadra}"
+                    th:value="${s.id}"
+                    th:text="${s.nome}">
+            </option>
+        </select>
+
+        <!-- ARBITRO -->
+        <label>Arbitro</label>
+        <select th:field="*{arbitro}" required>
+            <option value="" disabled selected>Seleziona arbitro</option>
+            <option th:each="a : ${arbitro}"
+                    th:value="${a.id}"
+                    th:text="${a.nome}">
+            </option>
+        </select>
+
+        <button type="submit">Salva Partita</button>
+
+    </form>
+
+</div>
+
+</body>
+</html>
