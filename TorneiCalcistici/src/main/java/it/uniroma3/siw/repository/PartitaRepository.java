@@ -23,4 +23,12 @@ public interface PartitaRepository extends JpaRepository<Partita,Integer>
 			order by p.dataOra asc
 			""")
 			List<Partita> findByTorneoId(@Param("id") int id);
+	
+	@Query("""
+		    SELECT p
+		    FROM Partita p
+		    WHERE p.stato <> 'FINITA'
+		""")
+		List<Partita> findPartiteAperte();
+	
 }

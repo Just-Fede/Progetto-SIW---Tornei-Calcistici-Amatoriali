@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Partite</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .match {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .teams {
+            font-weight: bold;
+            flex: 2;
+        }
+
+        .date {
+            flex: 1;
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .score {
+            flex: 1;
+            font-size: 18px;
+            color: #0d6efd;
+            text-align: center;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 6px 12px;
+            background: #198754;
+            color: white;
+            border-radius: 6px;
+            font-size: 14px;
+            flex: 0;
+        }
+
+        .btn:hover {
+            background: #157347;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Lista Partite</h1>
+
+    <div th:each="p : ${partite}" class="match">
+
+        <div class="teams">
+            <span th:text="${p.squadraHome.nome}">Casa</span>
+            vs
+            <span th:text="${p.squadraAway.nome}">Ospite</span>
+        </div>
+
+        <div class="date">
+            <span th:text="${#temporals.format(p.dataOra, 'dd/MM/yyyy HH:mm')}"></span>
+        </div>
+
+        <div class="score">
+            <span th:text="${p.goalsHome}">0</span>
+            -
+            <span th:text="${p.goalsAway}">0</span>
+        </div>
+
+        <a class="btn"
+           th:href="@{'/partitaModifica/' + ${p.id}}">
+            Modifica
+        </a>
+
+    </div>
+
+	<div class="back">
+	    <a href="/form/admin"
+	       style="display:inline-block;
+	              margin-top:20px;
+	              padding:10px 14px;
+	              background:#0d6efd;
+	              color:white;
+	              border-radius:8px;
+	              text-decoration:none;">
+	        ← Indietro
+	    </a>
+	</div>
+	
+</div>
+
+</body>
+</html>
