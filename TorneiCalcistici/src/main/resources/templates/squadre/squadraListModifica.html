@@ -46,6 +46,12 @@
                     Modifica
                 </a>
 
+				<form th:action="@{'/squadraElimina/' + ${squadra.id}}" method="post" style="display:inline;">
+				    <button type="submit" class="btn btn-danger">
+				        Elimina
+				    </button>
+				</form>
+				
             </div>
 
         </div>

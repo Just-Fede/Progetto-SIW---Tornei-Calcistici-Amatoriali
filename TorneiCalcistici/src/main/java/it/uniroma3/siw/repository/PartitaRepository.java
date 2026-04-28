@@ -31,4 +31,7 @@ public interface PartitaRepository extends JpaRepository<Partita,Integer>
 		""")
 		List<Partita> findPartiteAperte();
 	
+	void deleteBySquadraHomeId(int id);
+	void deleteBySquadraAwayId(int id);
+	
 }
