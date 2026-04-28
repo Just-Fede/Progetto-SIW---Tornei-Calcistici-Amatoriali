@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Tornei</title>
+
+	<link rel="stylesheet" th:href="@{/grafica.css}">
+	
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Lista Tornei</h1>
+
+    <div th:if="${#lists.isEmpty(tornei)}" class="empty">
+        Nessun torneo disponibile
+    </div>
+
+	<ul>
+	    <li th:each="torneo : ${tornei}"
+	        style="display:flex; align-items:center; margin-bottom:10px;">
+
+	        <a th:href="@{'/tornei/' + ${torneo.id}}"
+	           th:text="${torneo.nome}">
+	            Placeholder
+	        </a>
+
+	        <a th:href="@{'/torneoModifica/' + ${torneo.id}}"
+	           style="margin-left:auto;
+	                  padding:8px 12px;
+	                  background:#0d6efd;
+	                  color:white;
+	                  border-radius:8px;
+	                  text-decoration:none;">
+	            Modifica
+	        </a>
+
+	    </li>
+	</ul>
+	
+	<div class="buttons">
+	    <a href="/form/admin" class="back">Indietro</a>
+	</div>
+
+</div>
+
+
+
+</body>
+</html>

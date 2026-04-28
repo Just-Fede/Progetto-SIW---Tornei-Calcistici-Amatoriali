@@ -4,60 +4,8 @@
     <meta charset="UTF-8">
     <title>Pagina Admin</title>
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #eef2f7;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-        }
+<link rel="stylesheet" th:href="@{/grafica.css}">
 
-        .container {
-            width: 800px;
-            margin-top: 50px;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
-        }
-
-        .card h3 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-
-        a {
-            display: block;
-            text-align: center;
-            padding: 10px;
-            margin-bottom: 8px;
-            background: #4a90e2;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            transition: 0.2s;
-        }
-
-        a:hover {
-            background: #357ab8;
-        }
-    </style>
 </head>
 
 <body>
@@ -71,23 +19,34 @@
         <div class="card">
             <h3>Tornei</h3>
             <a href="/torneoForm">Aggiungi Torneo</a>
+			<br><br>
+			<a href="/torneoListModifica">Modifica Torneo</a>
         </div>
 
+		<br>
+		
         <div class="card">
             <h3>Squadre</h3>
             <a href="/squadraForm">Aggiungi Squadra</a>
+			<br><br>
 			<a href="/eliminaSquadraForm">Elimina Squadra</a>
         </div>
 
+		<br>
+		
         <div class="card">
             <h3>Giocatori</h3>
             <a href="/giocatoreForm">Aggiungi Giocatore</a>
         </div>
 
+		<br>
+		
         <div class="card">
             <h3>Partite</h3>
             <a href="/partitaForm">Aggiungi Partita</a>
+			<br><br>
             <a href="/partite">Aggiorna Partita</a>
+			<br><br>
 			<a href="/eliminaPartitaForm">Elimina Partita</a>
         </div>
 

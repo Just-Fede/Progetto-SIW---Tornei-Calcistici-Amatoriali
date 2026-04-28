@@ -21,7 +21,7 @@ import it.uniroma3.siw.repository.TorneoRepository;
 @Controller
 public class TorneoController {
 
-    private final TorneoService service;
+    private final TorneoService torneoService;
     private final TorneoRepository torneoRepository;
     private final PartecipazioneRepository partecipazioneRepository;
     private final PartitaRepository partitaRepository;
@@ -30,7 +30,7 @@ public class TorneoController {
     		PartecipazioneRepository partecipazioneRepository,
     		PartitaRepository partitaRepository) 
     {
-        this.service = service;
+        this.torneoService = service;
         this.torneoRepository = service.getRepository();
         this.partecipazioneRepository = partecipazioneRepository;
         this.partitaRepository = partitaRepository;
@@ -39,7 +39,7 @@ public class TorneoController {
     @GetMapping("/tornei/{id}")
     public String show(@PathVariable("id") int id, Model model) {
 
-        model.addAttribute("torneo", this.service.findById(id));
+        model.addAttribute("torneo", this.torneoService.findById(id));
 
         model.addAttribute("classifica", this.torneoRepository.getClassifica(id));
         
@@ -60,12 +60,10 @@ public class TorneoController {
     
     @GetMapping("/tornei")
     public String list(Model model) {
-        List<Torneo> allTornei = this.service.findAll();
+        List<Torneo> allTornei = this.torneoService.findAll();
         model.addAttribute("tornei", allTornei);
         return "tornei/list";
     }
-    
-	// TORNEO //////////////////////////////////////////////////////////////////////////////
 	
 	@GetMapping("/torneoForm")
 	public String torneoForm(Model model)
@@ -79,6 +77,28 @@ public class TorneoController {
 	{
 		this.torneoRepository.save(torneo);
 		return "redirect:/tornei";
+	}
+	
+	@GetMapping("/torneoListModifica")
+	public String torneoListModifica(Model model)
+	{
+		List<Torneo> allTornei = this.torneoService.findAll();
+		model.addAttribute("tornei", allTornei);
+		return "/form/torneoListModifica";
+	}
+	
+	@GetMapping("/torneoModifica/{id}")
+	public String torneoModifica(@PathVariable("id") int id, Model model)
+	{
+		model.addAttribute("torneo", this.torneoService.findById(id));
+		return("/form/torneoModifica");
+	}
+	
+	@PostMapping("/torneoSalvaModifica")
+	public String tornepSalvaModifica(@ModelAttribute Torneo torneo)
+	{
+		this.torneoService.save(torneo);
+		return "redirect:/torneoListModifica";
 	}
     
 }
