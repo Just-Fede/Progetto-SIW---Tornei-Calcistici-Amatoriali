@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Giocatori</title>
+
+    <link rel="stylesheet" th:href="@{/grafica.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Lista Giocatori</h1>
+
+        <div th:if="${#lists.isEmpty(giocatori)}">
+            <p>Nessun giocatore presente.</p>
+        </div>
+
+        <!-- LISTA -->
+        <div th:each="giocatore : ${giocatori}" class="list-row">
+
+            <!-- INFO SINISTRA -->
+            <div>
+                <strong th:text="${giocatore.nome + ' ' + giocatore.cognome}">
+                    Nome Cognome
+                </strong>
+
+                <div style="font-size: 13px; color: #666;">
+                    <span th:text="${giocatore.ruolo}">Ruolo</span> -
+                    <span th:text="${giocatore.altezza}">Altezza</span> m
+                </div>
+
+                <div style="font-size: 12px; color: #999;">
+                    Nascita:
+                    <span th:text="${giocatore.data_nascita}">data</span>
+                </div>
+
+            </div>
+
+            <!-- BOTTONI DESTRA -->
+            <div style="display: flex; gap: 10px;">
+				
+                <a th:href="@{'/giocatori/giocatoreModifica/' + ${giocatore.id}}"
+                   class="btn btn-primary">
+                    Modifica
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+	<div class="back">
+	    <a href="/admin"
+	       style="display:inline-block;
+	              margin-top:20px;
+	              padding:10px 14px;
+	              background:#0d6efd;
+	              color:white;
+	              border-radius:8px;
+	              text-decoration:none;">
+	        ← Indietro
+	    </a>
+	</div>
+	
+</div>
+
+</body>
+</html>
