@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica Squadra</title>
+
+    <link rel="stylesheet" th:href="@{/grafica.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Modifica Squadra</h1>
+
+        <form th:action="@{/squadraModifica}" th:object="${squadra}" method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <div class="group">
+                <label>Nome</label>
+                <input type="text" th:field="*{nome}">
+            </div>
+
+            <div class="group">
+                <label>Città</label>
+                <input type="text" th:field="*{citta}">
+            </div>
+
+            <div class="group">
+                <label>Anno Fondazione</label>
+                <input type="number" th:field="*{annoFondazione}">
+            </div>
+
+            <div class="buttons">
+
+                <a href="/squadre/squadraListModifica" class="btn btn-secondary">
+                    Indietro
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Salva
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+	
+</div>
+
+</body>
+</html>

@@ -43,7 +43,7 @@ public class PartitaController
 		model.addAttribute("squadra", this.squadraRepository.findAll());
 		model.addAttribute("arbitro", this.arbitroRepository.findAll());
 		
-		return "form/partitaForm";
+		return "partite/partitaForm";
 	}
 	
 	@PostMapping("/partite")
@@ -54,15 +54,15 @@ public class PartitaController
 		return "redirect:/tornei/" + partita.getTorneo().getId() + "/calendario";
 	}
 	
-	@GetMapping("/partite")
+	@GetMapping("/partiteListModifica")
 	public String listaPartite(Model model) {
 
 	    model.addAttribute("partite", partitaRepository.findPartiteAperte());
 
-	    return "form/partite";
+	    return "partite/partiteListModifica";
 	}
 	
-	@GetMapping("/partitaModifica/{id}")
+	@GetMapping("partitaModifica/{id}")
 	public String partitaModifica(@PathVariable Integer id, Model model) {
 
 	    Partita partita = partitaRepository.findById(id)
@@ -70,7 +70,7 @@ public class PartitaController
 
 	    model.addAttribute("partita", partita);
 
-	    return "form/partitaModifica";
+	    return "partite/partitaModifica";
 	}
 	
 	@PostMapping("/partitaModifica/{id}")

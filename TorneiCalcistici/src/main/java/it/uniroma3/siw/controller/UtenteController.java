@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.*;
 public class UtenteController 
 {
 
-	@GetMapping("/form/admin")
+	@GetMapping("/admin")
 	public String adminPage ()
 	{
-		return "form/admin";
+		return "/admin";
 	}
 	
 }

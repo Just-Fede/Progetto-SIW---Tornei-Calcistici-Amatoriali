@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Squadre</title>
+
+    <link rel="stylesheet" th:href="@{/grafica.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Lista Squadre</h1>
+
+        <div th:if="${#lists.isEmpty(squadre)}">
+            <p>Nessuna squadra presente.</p>
+        </div>
+
+        <!-- LISTA -->
+        <div th:each="squadra : ${squadre}" class="list-row">
+
+            <!-- INFO A SINISTRA -->
+            <div>
+                <strong th:text="${squadra.nome}">Nome squadra</strong>
+
+                <div style="font-size: 13px; color: #666;">
+                    <span th:text="${squadra.citta}">Città</span> -
+                    <span th:text="${squadra.annoFondazione}">Anno</span>
+                </div>
+            </div>
+
+            <!-- BOTTONI A DESTRA -->
+            <div style="display: flex; gap: 10px;">
+
+                <a th:href="@{'/squadre/' + ${squadra.id}}"
+                   class="btn btn-secondary">
+                    Dettagli
+                </a>
+
+                <a th:href="@{'/squadre/squadraModifica/' + ${squadra.id}}"
+                   class="btn btn-primary">
+                    Modifica
+                </a>
+
+            </div>
+
+        </div>
+
+		<div class="back">
+		    <a href="/admin"
+		       style="display:inline-block;
+		              margin-top:20px;
+		              padding:10px 14px;
+		              background:#0d6efd;
+		              color:white;
+		              border-radius:8px;
+		              text-decoration:none;">
+		        ← Indietro
+		    </a>
+		</div>
+		
+    </div>
+
+</div>
+
+</body>
+</html>

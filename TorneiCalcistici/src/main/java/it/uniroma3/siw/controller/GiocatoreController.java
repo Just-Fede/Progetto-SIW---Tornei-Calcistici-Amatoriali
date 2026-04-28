@@ -26,15 +26,15 @@ public class GiocatoreController
 	
 	// GIOCATORE //////////////////////////////////////////////////////////////////////////////
 	
-	@GetMapping("/giocatoreForm")
+	@GetMapping("giocatori/giocatoreForm")
 	public String giocatoreForm (Model model)
 	{
 		model.addAttribute("giocatore", new Giocatore());
 		model.addAttribute("squadre", this.squadraRepository.findAll());
-		return "form/giocatoreForm";
+		return "giocatori/giocatoreForm";
 	}
 	
-	@PostMapping("/giocatori")
+	@PostMapping("giocatori")
 	public String giocatoreNew(@ModelAttribute("giocatore") Giocatore giocatore)
 	{
 		this.giocatoreRepository.save(giocatore);

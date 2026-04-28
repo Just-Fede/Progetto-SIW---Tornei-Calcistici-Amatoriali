@@ -35,11 +35,11 @@ public class SquadraController
 	
 	// SQUADRA //////////////////////////////////////////////////////////////////////////////
 	
-	@GetMapping("/squadraForm")
+	@GetMapping("squadre/squadraForm")
 	public String squadraForm(Model model)
 	{
 		model.addAttribute("squadra", new Squadra());
-		return "form/squadraForm";
+		return "squadre/squadraForm";
 	}
 	
 	@PostMapping("/squadre")
@@ -48,5 +48,26 @@ public class SquadraController
 		this.squadraRepository.save(squadra);
 	    return "redirect:/squadre/" + squadra.getId();	
 	    }
+	
+	@GetMapping("/squadre/squadraListModifica")
+	public String squadraList (Model model)
+	{
+		model.addAttribute("squadre", this.squadraRepository.findAll());
+		return("/squadre/squadraListModifica");
+	}
+	
+	@GetMapping("/squadre/squadraModifica/{id}")
+	public String squadraModifica (@PathVariable("id") int id, Model model)
+	{
+		model.addAttribute("squadra", this.squadraRepository.findById(id));
+		return"/squadre/squadraModifica";
+	}
+	
+	@PostMapping("/squadraModifica")
+	public String squadraSalvaModifica (@ModelAttribute("squadra") Squadra squadra)
+	{
+		this.squadraRepository.save(squadra);
+		return"redirect:/squadre/squadraListModifica";
+	}
 	
 }
