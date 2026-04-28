@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Partite</title>
+
+	<link rel="stylesheet" th:href="@{/grafica.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Lista Partite</h1>
+
+    <div th:each="p : ${partite}" class="match">
+
+        <div class="teams">
+            <span th:text="${p.squadraHome.nome}">Casa</span>
+            vs
+            <span th:text="${p.squadraAway.nome}">Ospite</span>
+        </div>
+
+        <div class="date">
+            <span th:text="${#temporals.format(p.dataOra, 'dd/MM/yyyy HH:mm')}"></span>
+        </div>
+
+        <div class="score">
+            <span th:text="${p.goalsHome}">0</span>
+            -
+            <span th:text="${p.goalsAway}">0</span>
+        </div>
+
+        <a class="btn"
+           th:href="@{'partitaModifica/' + ${p.id}}">
+            Modifica
+        </a>
+
+    </div>
+
+	<div class="back">
+	    <a href="/admin"
+	       style="display:inline-block;
+	              margin-top:20px;
+	              padding:10px 14px;
+	              background:#0d6efd;
+	              color:white;
+	              border-radius:8px;
+	              text-decoration:none;">
+	        ← Indietro
+	    </a>
+	</div>
+	
+</div>
+
+</body>
+</html>

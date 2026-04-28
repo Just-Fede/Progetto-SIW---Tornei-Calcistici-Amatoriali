@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Partite</title>
+	<link rel="stylesheet" th:href="@{/graficaListPartite.css}">
+</head>
+
+<body>
+
+	<div class="container">
+
+		<h2>Partite</h2>
+
+		<div th:if="${#lists.isEmpty(partite)}">
+			Nessuna partita.
+		</div>
+
+		<table class="match-table">
+
+			<tr>
+				<th>ID</th>
+				<th>Home</th>
+				<th></th>
+				<th>Away</th>
+				<th>Ris</th>
+				<th>Data</th>
+				<th>Stato</th>
+				<th>Azioni</th>
+			</tr>
+
+			<tr th:each="p : ${partite}">
+
+				<td th:text="${p.id}"></td>
+
+				<td th:text="${p.squadraHome.nome}"></td>
+
+				<td style="text-align:center;">vs</td>
+
+				<td th:text="${p.squadraAway.nome}"></td>
+
+				<td>
+					<span th:text="${p.goalsHome}"></span>
+					-
+					<span th:text="${p.goalsAway}"></span>
+				</td>
+
+				<td th:text="${#temporals.format(p.dataOra, 'dd/MM HH:mm')}"></td>
+
+				<td th:text="${p.stato}"></td>
+
+				<td>
+					<form th:action="@{'partitaElimina/' + ${p.id}}" method="post">
+						<button class="btn-del">X</button>
+					</form>
+				</td>
+
+			</tr>
+
+		</table>
+
+	</div>
+
+	<div class="back">
+		<a href="/admin" style="display:inline-block;
+              margin-top:20px;
+              padding:10px 14px;
+              background:#0d6efd;
+              color:white;
+              border-radius:8px;
+              text-decoration:none;">
+			← Indietro
+		</a>
+	</div>
+
+</body>
+
+</html>

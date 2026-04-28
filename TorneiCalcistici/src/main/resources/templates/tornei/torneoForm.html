@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Aggiungi Torneo</title>
+
+	<link rel="stylesheet" th:href="@{/grafica.css}">
+</head>
+
+<body>
+
+	<div class="card">
+
+		<h1>Nuovo Torneo</h1>
+
+		<form th:action="@{/tornei}" method="post" th:object="${torneo}">
+
+			<label>Nome torneo</label>
+			<input type="text" th:field="*{nome}" required>
+
+			<label>Anno</label>
+			<input type="number" th:field="*{anno}" required>
+
+			<label>Descrizione</label>
+			<input type="text" th:field="*{descrizione}" required>
+		
+			<br><br>
+			<button type="submit">Salva torneo</button>
+
+		</form>
+
+		<div class="back">
+		    <a href="/admin" class="btn btn-back">
+		        ← Indietro
+		    </a>
+		</div>
+		
+	</div>
+
+</body>
+
+</html>

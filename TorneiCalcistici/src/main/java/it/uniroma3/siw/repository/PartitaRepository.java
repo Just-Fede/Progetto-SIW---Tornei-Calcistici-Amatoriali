@@ -20,8 +20,27 @@ public interface PartitaRepository extends JpaRepository<Partita,Integer>
 			join fetch p.squadraAway
 			left join fetch p.arbitro
 			where p.torneo.id = :id
+			order by p.dataOra asc
 			""")
+			List<Partita> findByTorneoId(@Param("id") int id);
 	
-	List<Partita> findByTorneoId(@Param("id") int id);
+	@Query("""
+		    SELECT p
+		    FROM Partita p
+		    WHERE p.stato <> 'FINITA'
+		""")
+		List<Partita> findPartiteAperte();
+	
+	@Query("""
+			SELECT p FROM Partita p
+			LEFT JOIN FETCH p.squadraHome
+			LEFT JOIN FETCH p.squadraAway
+			LEFT JOIN FETCH p.arbitro
+			LEFT JOIN FETCH p.torneo
+			""")
+			List<Partita> findAllComplete();
+	
+	void deleteBySquadraHomeId(int id);
+	void deleteBySquadraAwayId(int id);
 	
 }

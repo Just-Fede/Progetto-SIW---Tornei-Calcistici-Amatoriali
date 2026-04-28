@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Inserisci Risultato</title>
+	<link rel="stylesheet" th:href="@{/grafica.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Inserisci risultato</h1>
+
+	<form th:action="@{/partitaModifica/{id}(id=${partita.id})}" th:object="${partita}" method="post">
+
+		<div class="match">
+		    <div>
+		        <div>
+		            <span th:text="*{squadraHome.nome}"></span>
+		            vs
+		            <span th:text="*{squadraAway.nome}"></span>
+		        </div>
+
+		        <div style="font-size: 14px; color: #666; margin-top: 6px;">
+		            Torneo: <span th:text="*{torneo.nome}"></span>
+		        </div>
+		    </div>
+		</div>
+
+        <div class="row">
+            <label>Gol Casa</label>
+            <input type="number" min="0" th:field="*{goalsHome}">
+        </div>
+
+        <div class="row">
+            <label>Gol Trasferta</label>
+            <input type="number" min="0" th:field="*{goalsAway}">
+        </div>
+
+        <div class="row">
+            <label>Stato partita</label>
+            <select th:field="*{stato}">
+                <option value="PROGRAMMATA">Programmata</option>
+                <option value="FINITA">Finita</option>
+            </select>
+        </div>
+		<br>
+        <button type="submit">Salva risultato</button>
+
+    </form>
+
+	<div class="back">
+	    <a href="/partiteListModifica" class="btn btn-back">
+	        ← Indietro
+	    </a>
+	</div>
+	
+</div>
+
+</body>
+</html>

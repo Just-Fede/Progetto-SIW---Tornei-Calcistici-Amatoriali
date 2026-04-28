@@ -13,7 +13,7 @@ public class Arbitro {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int codice_arbitrale;
+	private int id;
 	
 	@NotBlank
 	private String nome;
@@ -21,12 +21,14 @@ public class Arbitro {
 	@NotBlank
 	private String cognome;
 
-	public int getCodice_arbitrale() {
-		return codice_arbitrale;
+
+
+	public int getId() {
+		return id;
 	}
 
-	public void setCodice_arbitrale(int codice_arbitrale) {
-		this.codice_arbitrale = codice_arbitrale;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getNome() {
@@ -47,7 +49,7 @@ public class Arbitro {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(codice_arbitrale);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -59,8 +61,10 @@ public class Arbitro {
 		if (getClass() != obj.getClass())
 			return false;
 		Arbitro other = (Arbitro) obj;
-		return codice_arbitrale == other.codice_arbitrale;
+		return id == other.id;
 	}
+
+
 
 
 	

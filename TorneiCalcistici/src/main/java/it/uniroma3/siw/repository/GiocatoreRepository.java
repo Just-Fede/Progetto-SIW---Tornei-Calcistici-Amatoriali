@@ -3,6 +3,7 @@ package it.uniroma3.siw.repository;
 import org.springframework.data.repository.CrudRepository;
 import it.uniroma3.siw.model.Giocatore;
 
-public interface GiocatoreRepository extends CrudRepository<Giocatore,Integer>{
-
+public interface GiocatoreRepository extends CrudRepository<Giocatore,Integer>
+{
+	void deleteBySquadraId(int id);
 }

@@ -1,0 +1,141 @@
+/* ===== RESET ===== */
+* {
+    box-sizing: border-box;
+}
+
+/* ===== BODY ===== */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6f9;
+    min-height: 100vh;
+}
+
+/* ===== LAYOUT ===== */
+.container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* ===== TITOLI ===== */
+h1, h2, h3 {
+    margin-top: 0;
+    color: #222;
+}
+
+/* ===== FORM ===== */
+.group {
+    margin-bottom: 18px;
+}
+
+label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: bold;
+    color: #333;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #d0d7de;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 3px rgba(13,110,253,0.15);
+}
+
+/* ===== BUTTON SYSTEM ===== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 16px;
+    border-radius: 8px;
+
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+/* primario */
+.btn-primary {
+    background: #0d6efd;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0b5ed7;
+}
+
+/* secondario */
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: #5c636a;
+}
+
+/* click effect */
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* ===== BOTTONI CONTAINER ===== */
+.buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+/* ===== LISTE ===== */
+.list-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* ===== LINK SQUADRE ===== */
+.team-link {
+    font-weight: bold;
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+.team-link:hover {
+    text-decoration: underline;
+}
+
+/* ===== UTILITY ===== */
+.back {
+    margin-top: 20px;
+}
+
+div {
+    margin-bottom: 20px;
+}
+
+

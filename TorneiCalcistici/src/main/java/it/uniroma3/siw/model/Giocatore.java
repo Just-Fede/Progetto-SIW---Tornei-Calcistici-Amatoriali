@@ -3,17 +3,20 @@ package it.uniroma3.siw.model;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Giocatore {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@NotBlank
@@ -22,17 +25,16 @@ public class Giocatore {
 	@NotBlank
 	private String cognome;
 	
-	@NotBlank
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
 	private LocalDate data_nascita;
 	
 	@NotBlank
 	private String ruolo;
 	
-	@NotBlank
 	private double altezza;
 	
-	@NotBlank
-	private int squadraId;
+	@NotNull
+	private Integer squadraId;
 
 	public int getId() {
 		return id;
@@ -82,11 +84,11 @@ public class Giocatore {
 		this.altezza = altezza;
 	}
 
-	public int getsquadraId() {
+	public Integer getsquadraId() {
 		return squadraId;
 	}
 
-	public void setsquadraId(int squadraId) {
+	public void setsquadraId(Integer squadraId) {
 		this.squadraId = squadraId;
 	}
 

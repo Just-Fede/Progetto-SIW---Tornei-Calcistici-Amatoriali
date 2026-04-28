@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagina Admin</title>
+
+<link rel="stylesheet" th:href="@{/grafica.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Gestione Admin</h1>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Tornei</h3>
+            <a href="/tornei/torneoForm">Aggiungi Torneo</a>
+			<br><br>
+			<a href="/tornei/torneoListModifica">Modifica Torneo</a>
+        </div>
+
+		<br>
+		
+        <div class="card">
+            <h3>Squadre</h3>
+            <a href="/squadre/squadraForm">Aggiungi Squadra</a>
+			<br><br>
+			<a href="/squadre/squadraListModifica">Modifica Squadra</a>
+        </div>
+
+		<br>
+		
+        <div class="card">
+            <h3>Giocatori</h3>
+            <a href="giocatori/giocatoreForm">Aggiungi Giocatore</a>
+			<br><br>
+			<a href="giocatori/giocatoreListModifica">Modifica Giocatore</a>
+        </div>
+
+		<br>
+		
+        <div class="card">
+            <h3>Partite</h3>
+            <a href="partitaForm">Aggiungi Partita</a>
+			<br><br>
+            <a href="partiteListModifica">Aggiorna Partita</a>
+			<br><br>
+			<a href="partite/partitaListElimina">Elimina Partita</a>
+        </div>
+
+    </div>
+
+	<div class="back">
+	    <a href="/"
+	       style="display:inline-block;
+	              margin-top:20px;
+	              padding:10px 14px;
+	              background:#0d6efd;
+	              color:white;
+	              border-radius:8px;
+	              text-decoration:none;">
+	        ← Indietro
+	    </a>
+	</div>
+	
+</div>
+
+</body>
+</html>

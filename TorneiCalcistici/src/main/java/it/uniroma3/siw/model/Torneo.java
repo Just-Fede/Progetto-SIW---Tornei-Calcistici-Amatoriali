@@ -14,13 +14,12 @@ import jakarta.validation.constraints.NotBlank;
 public class Torneo {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
 	@NotBlank
 	private String nome;
 	
-	@NotBlank
 	private int anno;
 	
 	@NotBlank

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica Torneo</title>
+	<link rel="stylesheet" th:href="@{/grafica.css}">
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>Modifica Torneo</h1>
+
+    <form th:action="@{/torneoSalvaModifica}" th:object="${torneo}" method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+        <div class="group">
+            <label>Nome</label>
+            <input type="text" th:field="*{nome}">
+        </div>
+
+        <div class="group">
+            <label>Descrizione</label>
+            <input type="text" th:field="*{descrizione}">
+        </div>
+
+        <div class="group">
+            <label>Anno</label>
+            <input type="number" th:field="*{anno}">
+        </div>
+
+        <div class="buttons">
+            <a href="/torneoListModifica" class="back">Indietro</a>
+            <button type="submit">Salva</button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

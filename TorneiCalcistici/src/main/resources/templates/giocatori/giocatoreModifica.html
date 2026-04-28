@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Modifica Giocatore</title>
+
+    <link rel="stylesheet" th:href="@{/grafica.css}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Modifica Giocatore</h1>
+
+        <form th:action="@{/giocatoreSalvaModifica}" th:object="${giocatore}" method="post">
+
+            <!-- ID -->
+            <input type="hidden" th:field="*{id}">
+
+            <!-- NOME -->
+            <div class="group">
+                <label>Nome</label>
+                <input type="text" th:field="*{nome}">
+            </div>
+
+            <!-- COGNOME -->
+            <div class="group">
+                <label>Cognome</label>
+                <input type="text" th:field="*{cognome}">
+            </div>
+
+            <!-- DATA NASCITA -->
+            <div class="group">
+                <label>Data di nascita</label>
+                <input type="date" th:field="*{data_nascita}">
+            </div>
+
+            <!-- RUOLO -->
+            <div class="group">
+                <label>Ruolo</label>
+                <input type="text" th:field="*{ruolo}">
+            </div>
+
+            <!-- ALTEZZA -->
+            <div class="group">
+                <label>Altezza (m)</label>
+                <input type="number" step="0.01" th:field="*{altezza}">
+            </div>
+
+            <!-- SQUADRA ID -->
+            <div class="group">
+                <label>Squadra ID</label>
+                <input type="number" th:field="*{squadraId}">
+            </div>
+
+            <!-- BOTTONI -->
+            <div class="buttons">
+
+                <a href="/giocatori/giocatoreListModifica" class="btn btn-secondary">
+                    Indietro
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Salva
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+</body>
+</html>
