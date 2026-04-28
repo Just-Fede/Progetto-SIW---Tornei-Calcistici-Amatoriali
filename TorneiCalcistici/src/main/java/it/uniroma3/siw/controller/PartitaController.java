@@ -13,6 +13,7 @@ import it.uniroma3.siw.repository.*;
 @Controller
 public class PartitaController 
 {
+	private final PartecipazioneRepository partecipazioneRepository;
 	private final PartitaRepository partitaRepository;
 	private final TorneoRepository torneoRepository;
 	private final SquadraRepository squadraRepository;
@@ -23,13 +24,14 @@ public class PartitaController
 			PartitaRepository partitaRepository,
 			TorneoRepository torneoRepository,
 			SquadraRepository squadraRepository,
-			ArbitroRepository arbitroRepository
+			ArbitroRepository arbitroRepository, PartecipazioneRepository partecipazioneRepository
 		) 
 	{
 		this.partitaRepository = partitaRepository;
 		this.torneoRepository = torneoRepository;
 		this.squadraRepository = squadraRepository;
 		this.arbitroRepository = arbitroRepository;
+		this.partecipazioneRepository = partecipazioneRepository;
 	}
 	
 	// PARTITA //////////////////////////////////////////////////////////////////////////////
@@ -87,5 +89,19 @@ public class PartitaController
 	    partitaRepository.save(partita);
 
 	    return "redirect:/tornei/" + partita.getTorneo().getId();
+	}
+	
+	@GetMapping("partite/partitaListElimina")
+	public String partiteListElimina(Model model)
+	{
+		model.addAttribute("partite",this.partitaRepository.findAllComplete());
+		return "partite/partitaListElimina";
+	}
+	
+	@PostMapping("/partite/partitaElimina/{id}")
+	public String partitaElimina(@PathVariable Integer id)
+	{
+		this.partitaRepository.deleteById(id);
+		return "redirect:/partite/partitaListElimina";
 	}
 }

@@ -31,6 +31,15 @@ public interface PartitaRepository extends JpaRepository<Partita,Integer>
 		""")
 		List<Partita> findPartiteAperte();
 	
+	@Query("""
+			SELECT p FROM Partita p
+			LEFT JOIN FETCH p.squadraHome
+			LEFT JOIN FETCH p.squadraAway
+			LEFT JOIN FETCH p.arbitro
+			LEFT JOIN FETCH p.torneo
+			""")
+			List<Partita> findAllComplete();
+	
 	void deleteBySquadraHomeId(int id);
 	void deleteBySquadraAwayId(int id);
 	

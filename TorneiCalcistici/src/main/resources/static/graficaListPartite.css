@@ -1,0 +1,137 @@
+/* =========================
+   BASE
+========================= */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f6f6f6;
+    color: #222;
+}
+
+.container {
+    width: 90%;
+    margin: 20px auto;
+}
+
+/* =========================
+   TITOLI
+========================= */
+
+h1, h2 {
+    margin-bottom: 15px;
+}
+
+/* =========================
+   CARD (usata dove serve)
+========================= */
+
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   LISTE SQUADRE / GIOCATORI
+========================= */
+
+.list-row {
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.list-row:last-child {
+    border-bottom: none;
+}
+
+.push-right {
+    float: right;
+}
+
+/* =========================
+   BOTTONI
+========================= */
+
+.btn {
+    padding: 6px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-danger {
+    background: #d9534f;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.85;
+}
+
+/* =========================
+   TABELLA PARTITE COMPATTA
+========================= */
+
+.match-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: white;
+}
+
+.match-table th,
+.match-table td {
+    border: 1px solid #ddd;
+    padding: 4px 6px;
+}
+
+.match-table th {
+    background: #f2f2f2;
+    text-align: left;
+}
+
+.match-table tr:nth-child(even) {
+    background: #fafafa;
+}
+
+/* =========================
+   ELEMENTI PARTITE
+========================= */
+
+.status {
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: #eee;
+    font-size: 11px;
+}
+
+.score {
+    font-weight: bold;
+}
+
+/* =========================
+   UTILITÀ
+========================= */
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
