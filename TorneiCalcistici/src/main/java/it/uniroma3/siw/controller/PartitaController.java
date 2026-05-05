@@ -45,7 +45,7 @@ public class PartitaController
 		model.addAttribute("squadra", this.squadraRepository.findAll());
 		model.addAttribute("arbitro", this.arbitroRepository.findAll());
 		
-		return "partite/partitaForm";
+		return "/admin/partite/partitaForm";
 	}
 	
 	@PostMapping("/partite")
@@ -61,7 +61,7 @@ public class PartitaController
 
 	    model.addAttribute("partite", partitaRepository.findPartiteAperte());
 
-	    return "partite/partiteListModifica";
+	    return "/admin/partite/partiteListModifica";
 	}
 	
 	@GetMapping("partitaModifica/{id}")
@@ -72,7 +72,7 @@ public class PartitaController
 
 	    model.addAttribute("partita", partita);
 
-	    return "partite/partitaModifica";
+	    return "/admin/partite/partitaModifica";
 	}
 	
 	@PostMapping("/partitaModifica/{id}")
@@ -91,17 +91,17 @@ public class PartitaController
 	    return "redirect:/tornei/" + partita.getTorneo().getId();
 	}
 	
-	@GetMapping("partite/partitaListElimina")
+	@GetMapping("/partitaListElimina")
 	public String partiteListElimina(Model model)
 	{
 		model.addAttribute("partite",this.partitaRepository.findAllComplete());
-		return "partite/partitaListElimina";
+		return "/admin/partite/partitaListElimina";
 	}
 	
-	@PostMapping("/partite/partitaElimina/{id}")
+	@PostMapping("/partitaElimina/{id}")
 	public String partitaElimina(@PathVariable Integer id)
 	{
 		this.partitaRepository.deleteById(id);
-		return "redirect:/partite/partitaListElimina";
+		return "redirect:/partitaListElimina";
 	}
 }

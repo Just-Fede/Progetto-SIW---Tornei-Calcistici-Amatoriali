@@ -3,11 +3,14 @@ package it.uniroma3.siw.model;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -20,12 +23,13 @@ public class Torneo {
 	@NotBlank
 	private String nome;
 	
+	@Min(1900)
 	private int anno;
 	
 	@NotBlank
 	private String descrizione;
 
-	@OneToMany(mappedBy = "torneo")
+	@OneToMany(mappedBy = "torneo", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Partita> partite;
 	
 	public int getId() {

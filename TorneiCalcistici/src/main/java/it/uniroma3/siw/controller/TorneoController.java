@@ -69,7 +69,7 @@ public class TorneoController {
 	public String torneoForm(Model model)
 	{
 		model.addAttribute("torneo", new Torneo());
-		return "/tornei/torneoForm";
+		return "/admin/tornei/torneoForm";
 	}
 	
 	@PostMapping("/tornei")
@@ -79,26 +79,26 @@ public class TorneoController {
 		return "redirect:/tornei";
 	}
 	
-	@GetMapping("/tornei/torneoListModifica")
+	@GetMapping("/torneoListModifica")
 	public String torneoListModifica(Model model)
 	{
 		List<Torneo> allTornei = this.torneoService.findAll();
 		model.addAttribute("tornei", allTornei);
-		return "tornei/torneoListModifica";
+		return "/admin/tornei/torneoListModifica";
 	}
 	
 	@GetMapping("/torneoModifica/{id}")
 	public String torneoModifica(@PathVariable("id") int id, Model model)
 	{
 		model.addAttribute("torneo", this.torneoService.findById(id));
-		return("tornei/torneoModifica");
+		return("/admin/tornei/torneoModifica");
 	}
 	
 	@PostMapping("/torneoSalvaModifica")
 	public String tornepSalvaModifica(@ModelAttribute Torneo torneo)
 	{
 		this.torneoService.save(torneo);
-		return "redirect:/tornei/torneoListModifica";
+		return "redirect:/admin/tornei/torneoListModifica";
 	}
     
 }

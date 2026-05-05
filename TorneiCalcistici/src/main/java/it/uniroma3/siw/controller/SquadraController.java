@@ -48,11 +48,11 @@ public class SquadraController
 	
 	// SQUADRA //////////////////////////////////////////////////////////////////////////////
 	
-	@GetMapping("squadre/squadraForm")
+	@GetMapping("/squadraForm")
 	public String squadraForm(Model model)
 	{
 		model.addAttribute("squadra", new Squadra());
-		return "squadre/squadraForm";
+		return "admin/squadre/squadraForm";
 	}
 	
 	@PostMapping("/squadre")
@@ -62,25 +62,25 @@ public class SquadraController
 	    return "redirect:/squadre/" + squadra.getId();	
 	    }
 	
-	@GetMapping("/squadre/squadraListModifica")
+	@GetMapping("/squadraListModifica")
 	public String squadraList (Model model)
 	{
 		model.addAttribute("squadre", this.squadraRepository.findAll());
-		return("/squadre/squadraListModifica");
+		return("/admin/squadre/squadraListModifica");
 	}
 	
-	@GetMapping("/squadre/squadraModifica/{id}")
+	@GetMapping("/squadraModifica/{id}")
 	public String squadraModifica (@PathVariable("id") int id, Model model)
 	{
 		model.addAttribute("squadra", this.squadraRepository.findById(id));
-		return"/squadre/squadraModifica";
+		return"/admin/squadre/squadraModifica";
 	}
 	
 	@PostMapping("/squadraModifica")
 	public String squadraSalvaModifica (@ModelAttribute("squadra") Squadra squadra)
 	{
 		this.squadraRepository.save(squadra);
-		return"redirect:/squadre/squadraListModifica";
+		return"redirect:/squadraListModifica";
 	}
 	
 	@PostMapping("/squadraElimina/{id}")
@@ -93,7 +93,7 @@ public class SquadraController
 	    partitaRepository.deleteBySquadraAwayId(id);
 	    
 	    this.squadraRepository.deleteById(id);
-	    return "redirect:/squadre/squadraListModifica";
+	    return "redirect:/squadraListModifica";
 	}
 	
 }

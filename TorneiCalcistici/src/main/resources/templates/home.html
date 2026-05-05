@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<title></title>
+</head>
+
+<body>
+	
+	<h1>Benvenuto     
+	<span th:text="${auth.name}"></span>
+	</h1>
+	
+	<h2>
+		<a href = "/tornei">Visualizza Tornei </a>
+	</h2>
+	
+	<div th:if="${auth.authorities.?[authority == 'ROLE_ADMIN'].size() > 0}">
+		<h3>
+			<a href = "/admin">Opzioni Admin </a>
+		</h3>
+	</div>
+	
+	<p>
+		<a href="/logout">Logout</a>
+	</p>
+	
+</body>
+
+</html>
