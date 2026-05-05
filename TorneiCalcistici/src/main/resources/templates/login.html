@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+	<link rel="stylesheet" th:href="@{/grafica.css}">
+</head>
+<body>
+
+<h2>Login</h2>
+
+<form method="post" action="/login">
+    <input type="text" name="username" placeholder="Username"/>
+	<br><br>
+    <input type="password" name="password" placeholder="Password"/>
+	<br><br>
+    <button type="submit">Conferma</button>
+	
+	<a href="/register">
+	    <button type="button">Registrati</button>
+	</a>
+	
+</form>
+
+<p th:if="${param.error}">Login sbagliato</p>
+
+</body>
+</html>

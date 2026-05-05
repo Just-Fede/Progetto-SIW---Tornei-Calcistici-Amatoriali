@@ -30,12 +30,12 @@ public class GiocatoreController
 	
 	// GIOCATORE //////////////////////////////////////////////////////////////////////////////
 	
-	@GetMapping("giocatori/giocatoreForm")
+	@GetMapping("/giocatoreForm")
 	public String giocatoreForm (Model model)
 	{
 		model.addAttribute("giocatore", new Giocatore());
 		model.addAttribute("squadre", this.squadraRepository.findAll());
-		return "giocatori/giocatoreForm";
+		return "admin/giocatori/giocatoreForm";
 	}
 	
 	@PostMapping("giocatori")
@@ -45,24 +45,24 @@ public class GiocatoreController
 		return "redirect:/squadre/" + giocatore.getsquadraId();
 	}
 	
-	@GetMapping("giocatori/giocatoreListModifica")
+	@GetMapping("/giocatoreListModifica")
 	public String giocatoreList(Model model)
 	{
 		model.addAttribute("giocatori",this.giocatoreRepository.findAll());
-		return"giocatori/giocatoreListModifica";
+		return"admin/giocatori/giocatoreListModifica";
 	}
 	
-	@GetMapping("giocatori/giocatoreModifica/{id}")
+	@GetMapping("/giocatoreModifica/{id}")
 	public String giocatoreModifica(@PathVariable("id") int id, Model model)
 	{
 		model.addAttribute("giocatore", this.giocatoreRepository.findById(id));
-		return "giocatori/giocatoreModifica";
+		return "/admin/giocatori/giocatoreModifica";
 	}
 	
 	@PostMapping("giocatoreSalvaModifica")
 	public String giocatoreSalva (@ModelAttribute Giocatore giocatore)
 	{
 		this.giocatoreService.save(giocatore);
-		return "redirect:/giocatori/giocatoreListModifica";
+		return "redirect:/giocatoreListModifica";
 	}
 }

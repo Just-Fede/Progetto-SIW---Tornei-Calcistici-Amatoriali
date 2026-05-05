@@ -3,6 +3,9 @@ package it.uniroma3.siw.model;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -26,22 +29,27 @@ public class Partita {
 	@Min(0)
 	private int goalsAway;
 
+	@NotBlank
 	private String stato;
 
 	@ManyToOne
 	@JoinColumn(name = "torneo_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Torneo torneo;
 
 	@ManyToOne
 	@JoinColumn(name = "squadra_home_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Squadra squadraHome;
 
 	@ManyToOne
 	@JoinColumn(name = "squadra_away_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Squadra squadraAway;
 
 	@ManyToOne
 	@JoinColumn(name = "arbitro_id")
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Arbitro arbitro;
 
 	public int getId() {

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
+@Table(name = "users")
 public class Utente {
 
 	@Id
@@ -14,12 +15,6 @@ public class Utente {
 	
 	@NotBlank
 	private String username;
-	
-	@NotBlank
-	private String password;
-	
-	@NotBlank
-	private String ruolo;
 
 	public long getId() {
 		return id;
@@ -37,21 +32,6 @@ public class Utente {
 		this.username = username;
 	}
 
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getRuolo() {
-		return ruolo;
-	}
-
-	public void setRuolo(String ruolo) {
-		this.ruolo = ruolo;
-	}
 
 	@Override
 	public int hashCode() {

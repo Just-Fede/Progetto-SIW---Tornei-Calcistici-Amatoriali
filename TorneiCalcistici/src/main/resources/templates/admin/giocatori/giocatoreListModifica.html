@@ -14,6 +14,8 @@
 
     <div class="card">
 
+		//ToDo Aggigere form di ricerca
+		
         <h1>Lista Giocatori</h1>
 
         <div th:if="${#lists.isEmpty(giocatori)}">
@@ -44,7 +46,7 @@
             <!-- BOTTONI DESTRA -->
             <div style="display: flex; gap: 10px;">
 				
-                <a th:href="@{'/giocatori/giocatoreModifica/' + ${giocatore.id}}"
+                <a th:href="@{'/giocatoreModifica/' + ${giocatore.id}}"
                    class="btn btn-primary">
                     Modifica
                 </a>
