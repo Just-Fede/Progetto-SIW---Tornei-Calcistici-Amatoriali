@@ -83,9 +83,14 @@ public class Credenziali
 	public void setRole(String role) 
 	{
 		role = role.toLowerCase();
-		if(role == "admin")
+		if(role.equals("admin"))
 			this.role = "ADMIN";
 		
 		else this.role = "ROLE_DEFAULT";
 	}
+
+    public String getRole() {
+        return role;
+    }
+
 }

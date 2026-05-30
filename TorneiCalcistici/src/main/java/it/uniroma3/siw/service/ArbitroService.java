@@ -1,14 +1,16 @@
 package it.uniroma3.siw.service;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+
 import it.uniroma3.siw.model.Arbitro;
 import it.uniroma3.siw.repository.ArbitroRepository;
 
 @Service
 public class ArbitroService {
 	
-	private ArbitroRepository repository;
+	private final ArbitroRepository repository;
 
 	public ArbitroService(ArbitroRepository repository)
 	{

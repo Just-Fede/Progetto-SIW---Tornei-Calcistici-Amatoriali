@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Nuovo Commento</title>
+</head>
+<body>
+
+<h1>Scrivi un commento</h1>
+
+<form th:action="@{'/commentoNew/' + ${pid}}" method="post">
+
+    <label>Commento:</label>
+    <br>
+
+    <textarea name="testo" rows="5" cols="40" required></textarea>
+
+    <br><br>
+
+    <button type="submit">Salva</button>
+
+</form>
+
+<br>
+
+<button >
+    <a th:href="@{'/commenti/' + ${pid}}">
+        ← Torna ai commenti
+    </a>
+</button>
+
+</body>
+</html>

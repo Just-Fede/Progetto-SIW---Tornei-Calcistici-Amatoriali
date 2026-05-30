@@ -9,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
@@ -80,6 +79,14 @@ public class Torneo {
 		Torneo other = (Torneo) obj;
 		return id == other.id;
 	}
+
+    public List<Partita> getPartite() {
+        return partite;
+    }
+
+    public void setPartite(List<Partita> partite) {
+        this.partite = partite;
+    }
 
 
 

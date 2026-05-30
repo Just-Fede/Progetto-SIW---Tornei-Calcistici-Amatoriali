@@ -9,6 +9,8 @@ import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.service.CredenzialiService;
 import it.uniroma3.siw.service.UtenteService;
 
+import static it.uniroma3.siw.SecurityConfiguration.ADMIN_ROLE;
+import static it.uniroma3.siw.SecurityConfiguration.DEFAULT_ROLE;
 
 @Controller
 public class UtenteController 
@@ -51,25 +53,27 @@ public class UtenteController
         return "register";
     }
     
-    @PostMapping("/register")
-    public String registrazione(
-            @RequestParam String username,
-            @RequestParam String password,
-            @RequestParam String role
-    ) {
+@PostMapping("/register")
+public String registrazione(
+        @RequestParam String username,
+        @RequestParam String password,
+        @RequestParam String role
+) {
 
-        if (!role.equals("USER") && !role.equals("ROLE_ADMIN")) {
-            role = "USER";
-        }
-
-        Utente u = new Utente();
-        u.setUsername(username);
-        u = utenteService.save(u);
-
-        this.credenzialiService.register(username, password, role);
-
-        return "redirect:/login";
+    if (!role.equals(ADMIN_ROLE)) 
+	{
+		System.out.println("Ruolo " + role + " non valido, assegnato ruolo di default");
+        role = DEFAULT_ROLE;
     }
+
+    Utente u = new Utente();
+    u.setUsername(username);
+    utenteService.save(u);
+
+    credenzialiService.register(username, password, role);
+
+    return "redirect:/login";
+}
     
 	@GetMapping("/admin")
 	public String adminPage ()
@@ -81,6 +85,6 @@ public class UtenteController
 	public String successo(Authentication auth, Model model)
 	{
 	   model.addAttribute("auth", auth);
-		return "/home";
+		return "/utenti/home";
 	}
 }

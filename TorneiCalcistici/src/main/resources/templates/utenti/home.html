@@ -16,15 +16,16 @@
 		<a href = "/tornei">Visualizza Tornei </a>
 	</h2>
 	
-	<div th:if="${auth.authorities.?[authority == 'ROLE_ADMIN'].size() > 0}">
-		<h3>
-			<a href = "/admin">Opzioni Admin </a>
-		</h3>
-	</div>
+<div sec:authorize="hasAuthority('ROLE_ADMIN')">
+    <a href="/admin">Admin</a>
+</div>
 	
 	<p>
 		<a href="/logout">Logout</a>
 	</p>
+
+	<p sec:authentication="name"></p>
+<p sec:authentication="authorities"></p>
 	
 </body>
 

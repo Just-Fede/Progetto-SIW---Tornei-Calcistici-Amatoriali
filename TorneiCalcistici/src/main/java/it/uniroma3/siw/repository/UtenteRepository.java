@@ -4,6 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import it.uniroma3.siw.model.Utente;
 
-public interface UtenteRepository extends CrudRepository<Utente,Integer>{
-
+public interface UtenteRepository extends CrudRepository<Utente,Integer>
+{
+    public Utente findByUsername(String username);
+    
 }
