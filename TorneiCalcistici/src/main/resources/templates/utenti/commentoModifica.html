@@ -1,0 +1,11 @@
+<form th:action="@{/commentoModifica/{id}(id=${commento.id})}" method="post">
+
+    <textarea name="testo"
+              th:text="${commento.testo}">
+    </textarea>
+
+    <button type="submit">
+        Salva
+    </button>
+
+</form>

@@ -1,8 +1,7 @@
 <!-- Lista commenti -->
 <div th:if="${!#lists.isEmpty(commenti)}">
 
-    <div th:each="commento : ${commenti}"
-         style="border:1px solid #ddd;
+    <div th:each="commento : ${commenti}" style="border:1px solid #ddd;
                 padding:12px;
                 margin-bottom:10px;
                 border-radius:8px;
@@ -20,7 +19,25 @@
             Testo commento
         </div>
 
+<a th:if="${commento.utente.username == utenteLoggato}"
+   th:href="@{/commentoModifica/{id}(id=${commento.id})}">
+    <button type="button">✏️ Modifica</button>
+</a>
     </div>
-<a th:href="@{'/commentoNew/' + ${pid}}" style="display:inline-block; padding:8px 12px; background:#0d6efd; color:white; border-radius:6px; text-decoration:none;"> Aggiungi Commento </a>
+    <a th:href="@{'/commentoNew/' + ${pid}}"
+        style="display:inline-block; padding:8px 12px; background:#0d6efd; color:white; border-radius:6px; text-decoration:none;">
+        Aggiungi Commento </a>
+
+    <div class="back">
+        <a href="/tornei" style="display:inline-block;
+	              margin-top:20px;
+	              padding:10px 14px;
+	              background:#0d6efd;
+	              color:white;
+	              border-radius:8px;
+	              text-decoration:none;">
+            ← Indietro
+        </a>
+    </div>
 
 </div>
