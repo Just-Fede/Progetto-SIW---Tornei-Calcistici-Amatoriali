@@ -2,11 +2,11 @@ package it.uniroma3.siw.repository;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import it.uniroma3.siw.model.Torneo;
 
 @Repository
@@ -64,4 +64,23 @@ public interface TorneoRepository extends JpaRepository<Torneo,Integer>
     """)
 List<Object[]> getClassifica(@Param("id") Integer id);
 	
+@Query("""
+    SELECT t
+    FROM Torneo t
+    LEFT JOIN FETCH t.partite
+    WHERE t.id = :id
+""")
+Torneo findJoinFetch(@Param("id") int id);
+
+@EntityGraph(attributePaths = {
+    "partite",
+    "partite.squadraHome",
+    "partite.squadraAway",
+    "partite.arbitro"
+})
+@Query("SELECT t FROM Torneo t WHERE t.id = :id")
+Torneo findEntityGraph(@Param("id") int id);
+
+
+
 }

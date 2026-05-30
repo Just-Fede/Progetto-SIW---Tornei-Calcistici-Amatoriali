@@ -10,7 +10,6 @@ import it.uniroma3.siw.model.Partita;
 import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.repository.UtenteRepository;
 import it.uniroma3.siw.service.CommentoService;
-import java.util.List;
 import org.springframework.web.bind.annotation.PathVariable;
 import it.uniroma3.siw.repository.PartitaRepository;
 import org.springframework.web.bind.annotation.RequestParam;
