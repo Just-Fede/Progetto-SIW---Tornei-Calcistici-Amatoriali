@@ -1,43 +1,97 @@
-<!-- Lista commenti -->
-<div th:if="${!#lists.isEmpty(commenti)}">
+<!DOCTYPE html>
+<html lang="it">
 
-    <div th:each="commento : ${commenti}" style="border:1px solid #ddd;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commenti</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .commento {
+            border: 1px solid #ddd;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+
+        .commento .utente {
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .commento .testo {
+            margin-bottom: 10px;
+        }
+
+        .commento button {
+            padding: 6px 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .commento button:hover {
+            background-color: #0056b3;
+        }
+
+        .back {
+            margin-top: 20px;
+        }
+    </style>
+
+<body>
+    <!-- Lista commenti -->
+    <div th:if="${!#lists.isEmpty(commenti)}">
+
+        <div th:each="commento : ${commenti}" style="border:1px solid #ddd;
                 padding:12px;
                 margin-bottom:10px;
                 border-radius:8px;
                 background:#f9f9f9;">
 
-        <!-- Utente -->
-        <div style="font-weight:bold; margin-bottom:6px;">
-            <span th:text="${commento.utente.username}">
-                Utente
-            </span>
+            <!-- Utente -->
+            <div style="font-weight:bold; margin-bottom:6px;">
+                <span th:text="${commento.utente.username}">
+                    Utente
+                </span>
+            </div>
+
+            <!-- Testo commento -->
+            <div th:text="${commento.testo}">
+                Testo commento
+            </div>
+
+            <a th:if="${commento.utente.username == utenteLoggato}"
+                th:href="@{/commentoModifica/{id}(id=${commento.id})}">
+                <button type="button">✏️ Modifica</button>
+            </a>
         </div>
 
-        <!-- Testo commento -->
-        <div th:text="${commento.testo}">
-            Testo commento
-        </div>
 
-<a th:if="${commento.utente.username == utenteLoggato}"
-   th:href="@{/commentoModifica/{id}(id=${commento.id})}">
-    <button type="button">✏️ Modifica</button>
-</a>
     </div>
-    <a th:href="@{'/commentoNew/' + ${pid}}"
-        style="display:inline-block; padding:8px 12px; background:#0d6efd; color:white; border-radius:6px; text-decoration:none;">
-        Aggiungi Commento </a>
+        <a th:href="@{'/commentoNew/' + ${pid}}"
+            style="display:inline-block; padding:8px 12px; background:#0d6efd; color:white; border-radius:6px; text-decoration:none;">
+            Aggiungi Commento </a>
 
-    <div class="back">
-        <a href="/tornei" style="display:inline-block;
+        <div class="back">
+            <a href="/tornei" style="display:inline-block;
 	              margin-top:20px;
 	              padding:10px 14px;
 	              background:#0d6efd;
 	              color:white;
 	              border-radius:8px;
 	              text-decoration:none;">
-            ← Indietro
-        </a>
-    </div>
-
-</div>
+                ← Indietro
+            </a>
+        </div>
+</body>
