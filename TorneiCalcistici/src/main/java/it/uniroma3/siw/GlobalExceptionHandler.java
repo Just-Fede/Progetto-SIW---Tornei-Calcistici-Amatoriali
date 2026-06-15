@@ -1,10 +1,5 @@
 package it.uniroma3.siw;
-
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {

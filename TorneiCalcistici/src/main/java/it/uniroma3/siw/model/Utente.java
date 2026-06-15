@@ -1,8 +1,15 @@
 package it.uniroma3.siw.model;
 
+import java.util.List;
 import java.util.Objects;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -15,6 +22,9 @@ public class Utente {
 	
 	@NotBlank
 	private String username;
+
+	@OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Commento> commenti;
 
 	public long getId() {
 		return id;
@@ -49,6 +59,14 @@ public class Utente {
 		Utente other = (Utente) obj;
 		return id == other.id;
 	}
+
+    public List<Commento> getCommenti() {
+        return commenti;
+    }
+
+    public void setCommenti(List<Commento> commenti) {
+        this.commenti = commenti;
+    }
 
 
 	

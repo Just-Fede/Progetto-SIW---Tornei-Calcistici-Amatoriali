@@ -1,16 +1,78 @@
 <!DOCTYPE html>
+<html lang="it">
 
 <head>
-	<title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Benvenuto</title>
+
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        .button {
+            display: block;
+            width: 220px;
+            margin: 15px auto;
+            padding: 12px;
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            border-radius: 8px;
+            font-size: 18px;
+            transition: 0.2s;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        .guest {
+            background-color: #28a745;
+        }
+
+        .guest:hover {
+            background-color: #1e7e34;
+        }
+    </style>
 </head>
 
 <body>
-	<h1>
-		<a href = "/login">Accedi </a>
-	</h1>
-	<h2>
-		<a href = "/register">Registrati </a>
-	</h2>
+
+    <div class="container">
+        <h1>Benvenuto</h1>
+
+        <a class="button" href="/login">
+            Accedi
+        </a>
+
+        <a class="button" href="/register">
+            Registrati
+        </a>
+
+        <a class="button guest" href="/tornei">
+            Continua come ospite
+        </a>
+    </div>
 
 </body>
 

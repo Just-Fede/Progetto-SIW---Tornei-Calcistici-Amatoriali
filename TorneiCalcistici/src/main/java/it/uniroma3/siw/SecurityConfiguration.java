@@ -4,7 +4,6 @@ import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,90 +14,64 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfiguration 
-{
+public class SecurityConfiguration {
 
-	public static final String DEFAULT_ROLE = "ROLE_DEFAULT";
-	public static final String ADMIN_ROLE = "ROLE_ADMIN";
-	
-	private final DataSource dataSource;
-	
-	  public SecurityConfiguration(DataSource dataSource) 
-	  {
-		    this.dataSource = dataSource;
-	  }
-	  
-	  @Bean
-	  public UserDetailsService userDetailsService() 
-	  {
-	    JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
-	    
-	    manager.setUsersByUsernameQuery
-	    ("SELECT username, password, 1 as enabled FROM credenziali WHERE username=?");
-	    
-	    manager.setAuthoritiesByUsernameQuery
-	    ("SELECT username, role FROM credenziali WHERE username=?");
-	    
-	    return manager;
-	  }
-	  
-	  @Bean
-	  public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public static final String DEFAULT_ROLE = "ROLE_DEFAULT";
+    public static final String ADMIN_ROLE = "ROLE_ADMIN";
 
-	      http
-		      .csrf(csrf -> csrf.disable())
-		      .formLogin(form -> form
-		          .loginPage("/login")
-		          .permitAll()
-		      )
-	          .authorizeHttpRequests(authorize -> {
+    private final DataSource dataSource;
 
-	              authorize.requestMatchers(
-	                      HttpMethod.GET,
-	                      "/",
-	                      "/index",
-	                      "/register",
-	                      "/css/**"
-	              ).permitAll();
+    public SecurityConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
-	              authorize.requestMatchers(
-	                      HttpMethod.POST,
-	                      "/register",
-	                      "/login"
-	              ).permitAll();
+    @Bean
+    public UserDetailsService userDetailsService() {
+        JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
 
-	              authorize.requestMatchers(
-	                      HttpMethod.GET,
-	                      "/admin/**"
-	              ).hasAuthority(ADMIN_ROLE);
+        manager.setUsersByUsernameQuery("SELECT username, password, 1 as enabled FROM credenziali WHERE username=?");
 
-	              authorize.requestMatchers(
-	                      HttpMethod.POST,
-	                      "/admin/**"
-	              ).hasAuthority(ADMIN_ROLE);
+        manager.setAuthoritiesByUsernameQuery("SELECT username, role FROM credenziali WHERE username=?");
 
-	              authorize.anyRequest().authenticated();
-	          })
+        return manager;
+    }
 
-	          .formLogin(form -> {
-	              form.loginPage("/login").permitAll();
-	              form.defaultSuccessUrl("/home", true);
-	              form.failureUrl("/login?error=true");
-	          })
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-	      	.logout(logout -> {
-	    	    logout.logoutUrl("/logout");
-	    	    logout.logoutSuccessUrl("/");
-	    	    logout.permitAll();
-	    	});
-	      
-	      return http.build();
-	  }
-	  
-	  @Bean
-	  public PasswordEncoder passwordEncoder() 
-	  {
-	      return new BCryptPasswordEncoder();
-	  }
-	  
+        http
+            .csrf(csrf -> csrf.disable())
+            .authorizeHttpRequests(authorize -> {
+
+            authorize.requestMatchers("/admin/**")
+                    .hasAuthority(ADMIN_ROLE);
+
+            authorize.requestMatchers(
+                    "/home",
+                    "/logout.html",
+                    "/commentoNew/**"
+            ).authenticated();
+
+            authorize.anyRequest().permitAll();
+        });
+
+        http.formLogin(form -> {
+            form.loginPage("/login");
+            form.defaultSuccessUrl("/home", true);
+            form.failureUrl("/login?error=true");
+            form.permitAll();
+        });
+
+        http.logout(logout -> {
+            logout.logoutSuccessUrl("/home");
+        });
+
+        return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
 }

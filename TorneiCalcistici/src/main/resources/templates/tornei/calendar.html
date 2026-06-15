@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <title>Calendario Partite</title>
@@ -21,7 +22,7 @@
             margin: 10px auto;
             width: 60%;
             border-radius: 10px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
         }
 
         .teams {
@@ -33,56 +34,71 @@
             margin-top: 5px;
             color: #555;
         }
+        .button-link {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 14px;
+            border-radius: 8px;
+            background: #0d6efd;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .button-link:hover {
+            background: #0b5ed7;
+        }
     </style>
 </head>
 
 <body>
 
-<h1>📅 Calendario Partite</h1>
+    <h1>📅 Calendario Partite</h1>
 
-<div th:if="${#lists.isEmpty(partite)}">
-    <p style="text-align:center;">Nessuna partita disponibile</p>
-</div>
-
-<div th:each="p : ${partite}" class="match">
-
-    <div class="teams">
-        <span th:text="${p.squadraHome.nome}">Home</span>
-        ⚔
-        <span th:text="${p.squadraAway.nome}">Away</span>
-    </div>
-	
-    <div class="info">
-		
-		<span th:text="${p.stato}"> Stato </span><br>
-		
-        📍 <span th:text="${p.luogo}">Luogo</span><br>
-
-        🕒 <span th:text="${p.dataOra}">Data</span><br>
-
-        🧑‍⚖️ Arbitro:
-        <span th:text="${p.arbitro?.nome + ' ' + p.arbitro?.cognome} ?: 'Non assegnato'"></span><br>
-
-        ⚽ Risultato:
-        <span th:text="${p.goalsHome}"></span>
-        -
-        <span th:text="${p.goalsAway}"></span>
+    <div th:if="${#lists.isEmpty(partite)}">
+        <p style="text-align:center;">Nessuna partita disponibile</p>
     </div>
 
-</div>
+    <div th:each="p : ${partite}" class="match">
 
-<div class="back">
-    <a href="/tornei"
-       style="display:inline-block;
+        <div class="teams">
+            <span th:text="${p.squadraHome.nome}">Home</span>
+            ⚔
+            <span th:text="${p.squadraAway.nome}">Away</span>
+        </div>
+
+        <div class="info">
+
+            <span th:text="${p.stato}"> Stato </span><br>
+
+            📍 <span th:text="${p.luogo}">Luogo</span><br>
+
+            🕒 <span th:text="${p.dataOra}">Data</span><br>
+
+            🧑‍⚖️ Arbitro:
+            <span th:text="${p.arbitro?.nome + ' ' + p.arbitro?.cognome} ?: 'Non assegnato'"></span><br>
+
+            ⚽ Risultato:
+            <span th:text="${p.goalsHome}"></span>
+            -
+            <span th:text="${p.goalsAway}"></span><br>
+
+            <a th:href="@{/commenti/{id}(id=${p.id})}" class="button-link">Commenti</a>
+        </div>
+
+    </div>
+
+    <div class="back">
+        <a href="/tornei" style="display:inline-block;
               margin-top:20px;
               padding:10px 14px;
               background:#0d6efd;
               color:white;
               border-radius:8px;
               text-decoration:none;">
-        ← Indietro
-    </a>
-</div>
+            ← Indietro
+        </a>
+    </div>
 
 </body>
+
 </html>

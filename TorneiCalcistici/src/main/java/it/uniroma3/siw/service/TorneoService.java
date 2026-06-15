@@ -9,7 +9,7 @@ import it.uniroma3.siw.repository.TorneoRepository;
 public class TorneoService 
 {
 
-	private TorneoRepository repository;
+	private final TorneoRepository repository;
 	
 	public TorneoService(TorneoRepository repository)
 	{

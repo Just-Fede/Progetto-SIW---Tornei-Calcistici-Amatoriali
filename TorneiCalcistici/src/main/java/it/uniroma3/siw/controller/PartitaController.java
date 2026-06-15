@@ -13,7 +13,6 @@ import it.uniroma3.siw.repository.*;
 @Controller
 public class PartitaController 
 {
-	private final PartecipazioneRepository partecipazioneRepository;
 	private final PartitaRepository partitaRepository;
 	private final TorneoRepository torneoRepository;
 	private final SquadraRepository squadraRepository;
@@ -24,14 +23,14 @@ public class PartitaController
 			PartitaRepository partitaRepository,
 			TorneoRepository torneoRepository,
 			SquadraRepository squadraRepository,
-			ArbitroRepository arbitroRepository, PartecipazioneRepository partecipazioneRepository
+			ArbitroRepository arbitroRepository, 
+			PartecipazioneRepository partecipazioneRepository
 		) 
 	{
 		this.partitaRepository = partitaRepository;
 		this.torneoRepository = torneoRepository;
 		this.squadraRepository = squadraRepository;
 		this.arbitroRepository = arbitroRepository;
-		this.partecipazioneRepository = partecipazioneRepository;
 	}
 	
 	// PARTITA //////////////////////////////////////////////////////////////////////////////
