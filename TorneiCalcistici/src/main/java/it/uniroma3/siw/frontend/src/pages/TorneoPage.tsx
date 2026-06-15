@@ -348,6 +348,19 @@ export default function TorneoPage() {
   useEffect(() => {
     if (id) {
       const torneoId = Number(id);
+
+      getTorneoById(torneoId).then((t) => {
+        setTorneo(t);
+        document.title = t.nome;
+      });
+
+      getCalendarioTorneo(torneoId).then(setPartite);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      const torneoId = Number(id);
       getTorneoById(torneoId).then(setTorneo);
       getCalendarioTorneo(torneoId).then(setPartite);
       getClassificaTorneo(torneoId).then(setClassifica);

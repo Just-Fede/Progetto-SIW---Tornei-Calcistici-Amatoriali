@@ -52,7 +52,7 @@ public class PartitaController
 	{
 		this.partitaRepository.save(partita);
 		
-		return "redirect:/tornei/" + partita.getTorneo().getId() + "/calendario";
+		return "redirect:/tornei";
 	}
 	
 	@GetMapping("/partiteListModifica")
@@ -87,7 +87,7 @@ public class PartitaController
 
 	    partitaRepository.save(partita);
 
-	    return "redirect:/tornei/" + partita.getTorneo().getId();
+	    return "redirect:/tornei";
 	}
 	
 	@GetMapping("/partitaListElimina")

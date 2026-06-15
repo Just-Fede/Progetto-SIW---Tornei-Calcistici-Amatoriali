@@ -224,6 +224,12 @@ export default function TorneiPage() {
     getTornei().then(setTornei);
   }, []);
 
+  useEffect(() => {
+    document.title = "Tornei";
+
+    getTornei().then(setTornei);
+  }, []);
+
   return (
     <>
       <style>{CSS}</style>
