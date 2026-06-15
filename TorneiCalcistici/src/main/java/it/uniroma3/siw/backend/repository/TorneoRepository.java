@@ -80,6 +80,12 @@ Torneo findJoinFetch(@Param("id") int id);
 @Query("SELECT t FROM Torneo t WHERE t.id = :id")
 Torneo findEntityGraph(@Param("id") int id);
 
-
+@Query("""
+SELECT t FROM Torneo t
+LEFT JOIN FETCH t.partecipazioni p
+LEFT JOIN FETCH p.squadra
+WHERE t.id = :id
+""")
+Torneo findFullById(@Param("id") int id);
 
 }

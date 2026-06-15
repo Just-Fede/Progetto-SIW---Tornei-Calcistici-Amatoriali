@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import it.uniroma3.siw.backend.dto.ClassificaRowDTO;
 import it.uniroma3.siw.backend.dto.PartitaDTO;
 import it.uniroma3.siw.backend.dto.TorneoDTO;
+import it.uniroma3.siw.backend.dto.PartecipazioneDTO;
+import it.uniroma3.siw.backend.dto.SquadraDTO;
+
+
 import it.uniroma3.siw.backend.model.Torneo;
 import it.uniroma3.siw.backend.service.TorneoService;
 
@@ -28,22 +32,59 @@ public class TorneoApiController {
         this.service = service;
     }
 
-    @GetMapping
-    public List<TorneoDTO> getAll() {
-        return service.findAll().stream()
-                .map(t -> new TorneoDTO(t.getId(), t.getNome(), t.getAnno(), t.getDescrizione()))
-                .collect(Collectors.toList());
-    }
+@GetMapping
+public List<TorneoDTO> getAll() {
+    return service.findAll().stream()
+        .map(t -> {
 
-    @GetMapping("/{id}")
-    public ResponseEntity<TorneoDTO> getById(@PathVariable("id") int id) {
-        try {
-            Torneo t = service.findById(id);
-            return ResponseEntity.ok(new TorneoDTO(t.getId(), t.getNome(), t.getAnno(), t.getDescrizione()));
-        } catch (NoSuchElementException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
+            List<PartecipazioneDTO> partecipazioni =
+                t.getPartecipazioni().stream()
+                    .map(p -> new PartecipazioneDTO(
+                        p.getId(),
+                        new SquadraDTO(
+                            p.getSquadra().getId(),
+                            p.getSquadra().getNome()
+                        )
+                    ))
+                    .toList();
+
+            return new TorneoDTO(
+                t.getId(),
+                t.getNome(),
+                t.getAnno(),
+                t.getDescrizione(),
+                partecipazioni
+            );
+        })
+        .toList();
+}
+
+@GetMapping("/{id}")
+public ResponseEntity<TorneoDTO> getById(@PathVariable int id) {
+
+    Torneo t = service.findById(id);
+
+    List<PartecipazioneDTO> partecipazioni =
+        t.getPartecipazioni().stream()
+            .map(p -> new PartecipazioneDTO(
+                p.getId(),
+                new SquadraDTO(
+                    p.getSquadra().getId(),
+                    p.getSquadra().getNome()
+                )
+            ))
+            .toList();
+
+    return ResponseEntity.ok(
+        new TorneoDTO(
+            t.getId(),
+            t.getNome(),
+            t.getAnno(),
+            t.getDescrizione(),
+            partecipazioni
+        )
+    );
+}
 
     @GetMapping("/{id}/classifica")
     public List<ClassificaRowDTO> classifica(@PathVariable("id") int id) {

@@ -10,12 +10,10 @@ export async function getTorneoById(id: number) {
   return res.json();
 }
 
-export async function getClassifica(id: number) {
-  const res = await fetch(`${BASE_URL}/tornei/${id}/classifica`);
-  return res.json();
-}
+export const getClassificaTorneo = (id: number) =>
+  fetch(`http://localhost:8080/api/tornei/${id}/classifica`)
+    .then(res => res.json());
 
-export async function getCalendario(id: number) {
-  const res = await fetch(`${BASE_URL}/tornei/${id}/calendario`);
-  return res.json();
-}
+export const getCalendarioTorneo = (id: number) =>
+  fetch(`http://localhost:8080/api/tornei/${id}/calendario`)
+    .then(res => res.json());

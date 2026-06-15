@@ -1,7 +1,6 @@
 package it.uniroma3.siw.backend.model;
 
 import java.util.List;
-import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -14,23 +13,26 @@ import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Torneo {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	
-	@NotBlank
-	private String nome;
-	
-	@Min(1900)
-	private int anno;
-	
-	@NotBlank
-	private String descrizione;
 
-	@OneToMany(mappedBy = "torneo", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Partita> partite;
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @NotBlank
+    private String nome;
+
+    @Min(1900)
+    private int anno;
+
+    @NotBlank
+    private String descrizione;
+
+    @OneToMany(mappedBy = "torneo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Partecipazione> partecipazioni;
+
+    @OneToMany(mappedBy = "torneo", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Partita> partite;
+
 	public int getId() {
 		return id;
 	}
@@ -63,31 +65,43 @@ public class Torneo {
 		this.descrizione = descrizione;
 	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
+	public List<Partecipazione> getPartecipazioni() {
+		return partecipazioni;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Torneo other = (Torneo) obj;
-		return id == other.id;
+	public void setPartecipazioni(List<Partecipazione> partecipazioni) {
+		this.partecipazioni = partecipazioni;
 	}
 
-    public List<Partita> getPartite() {
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + this.id;
+        return hash;
+    }
+
+	    public List<Partita> getPartite() {
         return partite;
     }
 
     public void setPartite(List<Partita> partite) {
         this.partite = partite;
     }
-
+	
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Torneo other = (Torneo) obj;
+        return this.id == other.id;
+    }
 
 
 

@@ -6,20 +6,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Partecipazione {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    private Squadra squadra;
+    @JoinColumn(name = "torneo_id")
+    private Torneo torneo;
 
     @ManyToOne
-    private Torneo torneo;
+    @JoinColumn(name = "squadra_id")
+    private Squadra squadra;
 
     public int getId() {
         return id;
@@ -41,24 +44,24 @@ public class Partecipazione {
         this.torneo = torneo;
     }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Partecipazione other = (Partecipazione) obj;
-		return id == other.id;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Partecipazione other = (Partecipazione) obj;
+        return id == other.id;
+    }
 
-
-
-    
 }

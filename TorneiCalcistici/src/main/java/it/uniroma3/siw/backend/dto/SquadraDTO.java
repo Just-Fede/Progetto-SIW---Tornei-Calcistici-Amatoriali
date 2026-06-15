@@ -1,5 +1,6 @@
 package it.uniroma3.siw.backend.dto;
 
-public class SquadraDTO {
-    
-}
+public record SquadraDTO(
+    int id,
+    String nome
+) {}
