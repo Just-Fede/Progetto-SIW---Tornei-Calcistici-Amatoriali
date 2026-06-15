@@ -1,8 +1,15 @@
 package it.uniroma3.siw.backend.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
+
+import it.uniroma3.siw.backend.dto.ClassificaRowDTO;
+import it.uniroma3.siw.backend.dto.PartitaDTO;
+import it.uniroma3.siw.backend.model.Partita;
 import it.uniroma3.siw.backend.model.Torneo;
+import it.uniroma3.siw.backend.repository.PartitaRepository;
 import it.uniroma3.siw.backend.repository.TorneoRepository;
 
 @Service
@@ -10,17 +17,45 @@ public class TorneoService
 {
 
 	private final TorneoRepository repository;
+	private final PartitaRepository partitaRepository;
 	
-	public TorneoService(TorneoRepository repository)
+	public TorneoService(TorneoRepository repository, PartitaRepository partitaRepository)
 	{
 		this.repository = repository;
+		this.partitaRepository = partitaRepository;
 	}
 	
 	public Torneo findById(int id)
 	{
 		return repository.findById(id).get();
 	}
-	
+
+	public List<ClassificaRowDTO> getClassifica(int id) {
+		return repository.getClassifica(id).stream()
+				.map(this::mapClassificaRow)
+				.collect(Collectors.toList());
+	}
+
+	public List<PartitaDTO> getCalendario(int id) {
+		return partitaRepository.findByTorneoId(id).stream()
+				.map(this::mapPartita)
+				.collect(Collectors.toList());
+	}
+
+	private ClassificaRowDTO mapClassificaRow(Object[] row) {
+		String squadra = (String) row[1];
+		int punti = ((Number) row[2]).intValue();
+		int giocate = ((Number) row[3]).intValue();
+		int golFatti = ((Number) row[4]).intValue();
+		int golSubiti = ((Number) row[5]).intValue();
+		return new ClassificaRowDTO(squadra, punti, giocate, golFatti, golSubiti);
+	}
+
+	private PartitaDTO mapPartita(Partita partita) {
+		String squadraCasa = partita.getSquadraHome() != null ? partita.getSquadraHome().getNome() : null;
+		String squadraOspite = partita.getSquadraAway() != null ? partita.getSquadraAway().getNome() : null;
+		return new PartitaDTO(squadraCasa, squadraOspite, partita.getGoalsHome(), partita.getGoalsAway());
+	}
 	
 	public List<Torneo> findAll()
 	{
@@ -37,6 +72,5 @@ public class TorneoService
 	public TorneoRepository getRepository() {
 		return repository;
 	}
-	
-	
 }
+
