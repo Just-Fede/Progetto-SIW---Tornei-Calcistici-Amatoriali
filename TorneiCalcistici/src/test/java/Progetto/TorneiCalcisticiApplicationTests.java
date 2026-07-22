@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import it.uniroma3.siw.backend.repository.TorneoRepository;
-import it.uniroma3.siw.backend.TorneiCalcisticiApplication;
-import it.uniroma3.siw.backend.model.Torneo;
+import it.uniroma3.siw.repository.TorneoRepository;
+import it.uniroma3.siw.TorneiCalcisticiApplication;
+import it.uniroma3.siw.model.Torneo;
 
 
 @SpringBootTest(classes = TorneiCalcisticiApplication.class)
