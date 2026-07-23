@@ -8,29 +8,28 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import it.uniroma3.siw.model.Partita;
-import it.uniroma3.siw.repository.*;
+import it.uniroma3.siw.service.*;
 
 @Controller
 public class PartitaController 
 {
-	private final PartitaRepository partitaRepository;
-	private final TorneoRepository torneoRepository;
-	private final SquadraRepository squadraRepository;
-	private final ArbitroRepository arbitroRepository;
+	private final PartitaService partitaService;
+	private final TorneoService torneoService;
+	private final SquadraService squadraService;
+	private final ArbitroService arbitroService;
 	
 	public PartitaController
 		(
-			PartitaRepository partitaRepository,
-			TorneoRepository torneoRepository,
-			SquadraRepository squadraRepository,
-			ArbitroRepository arbitroRepository, 
-			PartecipazioneRepository partecipazioneRepository
+			PartitaService partitaService,
+			TorneoService torneoService,
+			SquadraService squadraService,
+			ArbitroService arbitroService
 		) 
 	{
-		this.partitaRepository = partitaRepository;
-		this.torneoRepository = torneoRepository;
-		this.squadraRepository = squadraRepository;
-		this.arbitroRepository = arbitroRepository;
+		this.partitaService = partitaService;
+		this.torneoService = torneoService;
+		this.squadraService = squadraService;
+		this.arbitroService = arbitroService;
 	}
 	
 	// PARTITA //////////////////////////////////////////////////////////////////////////////
@@ -40,9 +39,9 @@ public class PartitaController
 	{
 		model.addAttribute("partita", new Partita());
 		
-		model.addAttribute("torneo", this.torneoRepository.findAll());
-		model.addAttribute("squadra", this.squadraRepository.findAll());
-		model.addAttribute("arbitro", this.arbitroRepository.findAll());
+		model.addAttribute("torneo", this.torneoService.findAll());
+		model.addAttribute("squadra", this.squadraService.findAll());
+		model.addAttribute("arbitro", this.arbitroService.findAll());
 		
 		return "/admin/partite/partitaForm";
 	}
@@ -50,57 +49,48 @@ public class PartitaController
 	@PostMapping("/partite")
 	public String partitaNew(@ModelAttribute("partita") Partita partita)
 	{
-		this.partitaRepository.save(partita);
+		this.partitaService.save(partita);
 		
 		return "redirect:/tornei";
 	}
 	
 	@GetMapping("/partiteListModifica")
-	public String listaPartite(Model model) {
-
-	    model.addAttribute("partite", partitaRepository.findPartiteAperte());
-
-	    return "/admin/partite/partiteListModifica";
+	public String listaPartite(Model model)
+	{
+		model.addAttribute("partite", this.partitaService.findPartiteAperte());
+		return "/admin/partite/partiteListModifica";
 	}
 	
 	@GetMapping("partitaModifica/{id}")
-	public String partitaModifica(@PathVariable Integer id, Model model) {
-
-	    Partita partita = partitaRepository.findById(id)
-	        .orElseThrow(() -> new RuntimeException("Partita non trovata"));
-
-	    model.addAttribute("partita", partita);
-
-	    return "/admin/partite/partitaModifica";
+	public String partitaModifica(@PathVariable Integer id, Model model)
+	{
+		Partita partita = this.partitaService.findById(id);
+		model.addAttribute("partita", partita);
+		return "/admin/partite/partitaModifica";
 	}
 	
 	@PostMapping("/partitaModifica/{id}")
-	public String salvaRisultato(@PathVariable Integer id,
-	                             @ModelAttribute Partita partitaForm) {
-
-	    Partita partita = partitaRepository.findById(id)
-	        .orElseThrow();
-
-	    partita.setGoalsHome(partitaForm.getGoalsHome());
-	    partita.setGoalsAway(partitaForm.getGoalsAway());
-	    partita.setStato(partitaForm.getStato());
-
-	    partitaRepository.save(partita);
-
-	    return "redirect:/tornei";
+	public String salvaRisultato(@PathVariable Integer id, @ModelAttribute Partita partitaForm)
+	{
+		Partita partita = this.partitaService.findById(id);
+		partita.setGoalsHome(partitaForm.getGoalsHome());
+		partita.setGoalsAway(partitaForm.getGoalsAway());
+		partita.setStato(partitaForm.getStato());
+		this.partitaService.save(partita);
+		return "redirect:/tornei";
 	}
 	
 	@GetMapping("/partitaListElimina")
 	public String partiteListElimina(Model model)
 	{
-		model.addAttribute("partite",this.partitaRepository.findAllComplete());
+		model.addAttribute("partite", this.partitaService.findAllComplete());
 		return "/admin/partite/partitaListElimina";
 	}
 	
 	@PostMapping("/partitaElimina/{id}")
 	public String partitaElimina(@PathVariable Integer id)
 	{
-		this.partitaRepository.deleteById(id);
+		this.partitaService.deleteById(id);
 		return "redirect:/partitaListElimina";
 	}
 }
