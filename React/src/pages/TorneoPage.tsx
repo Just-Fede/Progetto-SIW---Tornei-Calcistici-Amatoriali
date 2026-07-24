@@ -360,8 +360,11 @@ function formatDataOra(dataOra: string) {
   return Number.isNaN(data.getTime())
     ? dataOra
     : data.toLocaleString("it-IT", {
-      dateStyle: "short",
-      timeStyle: "short",
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
     });
 }
 
@@ -381,17 +384,6 @@ export default function TorneoPage() {
         document.title = t.nome;
       });
 
-      getCalendarioTorneo(torneoId).then((data) => {
-        console.log(data[0]); // stampa la prima partita in console
-        setPartite(data);
-      });
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (id) {
-      const torneoId = Number(id);
-      getTorneoById(torneoId).then(setTorneo);
       getCalendarioTorneo(torneoId).then(setPartite);
       getClassificaTorneo(torneoId).then(setClassifica);
     }

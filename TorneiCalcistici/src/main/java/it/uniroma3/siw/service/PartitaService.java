@@ -1,5 +1,7 @@
 package it.uniroma3.siw.service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.jspecify.annotations.Nullable;
@@ -34,8 +36,16 @@ public class PartitaService
 	
 	public List<Partita> findAll()
 	{
-		java.util.List<Partita> list = new java.util.ArrayList<>();
-		repository.findAll().forEach(list::add);
+		java.util.List<Partita> list = repository.findAll();
+		
+		Collections.sort(list, new Comparator<Partita>(){
+			@Override
+			public int compare(Partita p1, Partita p2)
+			{
+				return p1.getDataOra().compareTo(p2.getDataOra());
+			}
+		});
+		
 		return list;
 	}
 	

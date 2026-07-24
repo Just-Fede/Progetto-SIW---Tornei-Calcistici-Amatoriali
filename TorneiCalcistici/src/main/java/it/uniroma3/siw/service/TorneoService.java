@@ -37,9 +37,10 @@ public class TorneoService
 	}
 
 	public List<PartitaDTO> getCalendario(int id) {
-		return partitaRepository.findByTorneoId(id).stream()
-				.map(this::mapPartita)
-				.collect(Collectors.toList());
+	    return partitaRepository.findByTorneoId(id).stream()
+	            .sorted(java.util.Comparator.comparing(Partita::getDataOra))
+	            .map(this::mapPartita)
+	            .collect(Collectors.toList());
 	}
 
 	private ClassificaRowDTO mapClassificaRow(Object[] row) {
