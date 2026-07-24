@@ -1,8 +1,12 @@
 package it.uniroma3.siw.service;
 
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+
+import it.uniroma3.siw.model.Giocatore;
 import it.uniroma3.siw.model.Squadra;
+import it.uniroma3.siw.repository.PartecipazioneRepository;
 import it.uniroma3.siw.repository.SquadraRepository;
 
 
@@ -10,11 +14,13 @@ import it.uniroma3.siw.repository.SquadraRepository;
 public class SquadraService 
 {
 
-	private SquadraRepository repository;
+	private final SquadraRepository repository;
+	private final PartecipazioneRepository partecipazioneRepository;
 	
-	public SquadraService(SquadraRepository repository)
+	public SquadraService(SquadraRepository repository,PartecipazioneRepository partecipazioneRepository)
 	{
 		this.repository = repository;
+		this.partecipazioneRepository = partecipazioneRepository;
 	}
 	
 	public Squadra findById(int id)
@@ -35,8 +41,17 @@ public class SquadraService
 		return this.repository.save(saveMe);
 	}
 
-	public SquadraRepository getRepository() {
-		return repository;
+	public List<Giocatore> findAllGiocatori(int id) 
+	{
+		return this.repository.findAllGiocatori(id);
+	}
+
+	public void deleteById(int id) 
+	{
+		// nel service, prima di eliminare la squadra
+		partecipazioneRepository.deleteAll(partecipazioneRepository.findBySquadraId(id));
+		repository.deleteById(id);
+		
 	}
 	
 }

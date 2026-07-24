@@ -193,6 +193,7 @@ const CSS = `
     transition: background .15s;
   }
   .tp-squad-item:hover { background: var(--border); }
+  .tp-squad-item a { cursor: pointer; }
 
   .tp-squad-num {
     font-size: 10px;
@@ -206,17 +207,33 @@ const CSS = `
   /* ── calendario ── */
   .tp-match {
     display: flex;
-    align-items: center;
-    gap: 0;
+    flex-direction: column;
+    gap: 6px;
     padding: 10px 12px;
     border-radius: 6px;
     background: var(--surface);
     margin-bottom: 6px;
     font-size: 13px;
     transition: background .15s;
+    text-decoration: none;
+    color: inherit;
   }
-  .tp-match:hover { background: var(--border); }
+  .tp-match:hover { background: var(--border); cursor: pointer; }
   .tp-match:last-child { margin-bottom: 0; }
+
+  .tp-match-date {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .tp-match-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
 
   .tp-match-team {
     flex: 1;
@@ -338,6 +355,16 @@ function rankClass(i: number) {
   return "";
 }
 
+function formatDataOra(dataOra: string) {
+  const data = new Date(dataOra);
+  return Number.isNaN(data.getTime())
+    ? dataOra
+    : data.toLocaleString("it-IT", {
+      dateStyle: "short",
+      timeStyle: "short",
+    });
+}
+
 /* ─── component ─────────────────────────────────────────────────────────────── */
 export default function TorneoPage() {
   const { id } = useParams();
@@ -354,7 +381,10 @@ export default function TorneoPage() {
         document.title = t.nome;
       });
 
-      getCalendarioTorneo(torneoId).then(setPartite);
+      getCalendarioTorneo(torneoId).then((data) => {
+        console.log(data[0]); // stampa la prima partita in console
+        setPartite(data);
+      });
     }
   }, [id]);
 
@@ -446,7 +476,16 @@ export default function TorneoPage() {
                   {squadre.map((p, i) => (
                     <li className="tp-squad-item" key={p.id}>
                       <span className="tp-squad-num">{i + 1}</span>
-                      {p.squadra?.nome ?? "—"}
+                      {p.squadra?.id ? (
+                        <a
+                          href={`http://localhost:8080/squadre/${p.squadra.id}`}
+                          style={{ color: "inherit", textDecoration: "none", flex: 1 }}
+                        >
+                          {p.squadra?.nome ?? "—"}
+                        </a>
+                      ) : (
+                        p.squadra?.nome ?? "—"
+                      )}
                     </li>
                   ))}
                 </ul>
@@ -465,15 +504,22 @@ export default function TorneoPage() {
             <div className="tp-card-body">
               {partite.length > 0 ? (
                 partite.map((p, i) => (
-                  <div className="tp-match" key={i}>
-                    <span className="tp-match-team">{p.squadraCasa}</span>
-                    <span className="tp-score">
-                      {p.golCasa}
-                      <span className="tp-score-sep">:</span>
-                      {p.golOspite}
+                  <a
+                    className="tp-match"
+                    key={i}
+                    href={`http://localhost:8080/commenti/${p.id}`}
+                  >
+                    <span className="tp-match-date">{formatDataOra(p.dataOra)}</span>
+                    <span className="tp-match-row">
+                      <span className="tp-match-team">{p.squadraCasa}</span>
+                      <span className="tp-score">
+                        {p.golCasa}
+                        <span className="tp-score-sep">:</span>
+                        {p.golOspite}
+                      </span>
+                      <span className="tp-match-team right">{p.squadraOspite}</span>
                     </span>
-                    <span className="tp-match-team right">{p.squadraOspite}</span>
-                  </div>
+                  </a>
                 ))
               ) : (
                 <p className="tp-empty">Nessuna partita ancora</p>

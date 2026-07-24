@@ -2,120 +2,323 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Dettaglio Squadra</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${squadra.nome}">Dettaglio Squadra</title>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --pitch:   #0a3d1f;
+            --grass:   #11562b;
+            --lime:    #c8f135;
+            --white:   #f5f7f0;
+            --muted:   #8a9b80;
+            --surface: #0e2a14;
+            --card:    #122e18;
+            --border:  #1f4726;
+            --gold:    #f5c842;
+            --blue:    #4a90d9;
+            --red:     #e05c5c;
+            --orange:  #e0a45c;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f6f8;
+            font-family: 'Inter', sans-serif;
+            background: var(--pitch);
+            color: var(--white);
+            margin: 0;
+            min-height: 100vh;
+            padding-bottom: 60px;
+        }
+
+        /* ── hero ── */
+        .sq-hero {
+            background: var(--grass);
+            background-image:
+                repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 48px),
+                repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 48px);
+            padding: 48px 32px 36px;
+            border-bottom: 2px solid var(--lime);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sq-hero::after {
+            content: "🛡";
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 180px;
+            opacity: 0.06;
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        .sq-hero-inner {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .sq-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--lime);
+            text-decoration: none;
+            margin-bottom: 20px;
+            opacity: .8;
+            transition: opacity .15s;
+        }
+        .sq-back:hover { opacity: 1; }
+
+        .sq-badge {
+            display: inline-block;
+            background: var(--lime);
+            color: var(--pitch);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 2px;
+            margin-bottom: 10px;
+        }
+
+        .sq-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(40px, 8vw, 64px);
+            letter-spacing: .03em;
+            line-height: .95;
+            margin: 0 0 18px;
+            color: var(--white);
+        }
+
+        .sq-meta {
+            display: flex;
+            gap: 28px;
+            flex-wrap: wrap;
+        }
+
+        .sq-meta-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .sq-meta-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .sq-meta-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        /* ── body ── */
+        .sq-body {
+            max-width: 700px;
+            margin: 32px auto 0;
+            padding: 0 32px;
+        }
+
+        @media (max-width: 600px) {
+            .sq-hero { padding: 32px 16px 24px; }
+            .sq-body { padding: 0 16px; }
+        }
+
+        .sq-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .sq-card-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border);
+            background: var(--surface);
+        }
+
+        .sq-card-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: var(--lime);
+            color: var(--pitch);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .sq-card-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .sq-card-body { padding: 10px 18px 18px; }
+
+        /* ── players ── */
+        ul.sq-players {
+            list-style: none;
             margin: 0;
             padding: 0;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 40px auto;
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-        }
-
-        h1 {
-            margin-top: 0;
-            color: #2c3e50;
-        }
-
-        h2 {
-            margin-top: 30px;
-            color: #34495e;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 5px;
-        }
-
-        p {
-            margin: 8px 0;
-            color: #555;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        li {
-            padding: 10px;
-            margin-bottom: 8px;
-            background: #f9f9f9;
-            border-radius: 6px;
             display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .sq-player {
+            display: flex;
+            align-items: center;
             justify-content: space-between;
+            gap: 12px;
+            padding: 10px 14px;
+            border-radius: 6px;
+            background: var(--surface);
+            transition: background .15s;
+        }
+        .sq-player:hover { background: var(--border); }
+
+        .sq-player-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
-        li:hover {
-            background: #eef3f7;
+        .sq-role {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+            flex-shrink: 0;
+            background: var(--border);
+            color: var(--muted);
         }
 
-        .empty {
-            color: #888;
-            font-style: italic;
+        /* role color-coding via data attribute, case-insensitive-ish common values */
+        .sq-role[data-ruolo="Portiere"],
+        .sq-role[data-ruolo="portiere"] {
+            background: rgba(245, 200, 66, 0.15);
+            color: var(--gold);
+        }
+        .sq-role[data-ruolo="Difensore"],
+        .sq-role[data-ruolo="difensore"] {
+            background: rgba(74, 144, 217, 0.15);
+            color: var(--blue);
+        }
+        .sq-role[data-ruolo="Centrocampista"],
+        .sq-role[data-ruolo="centrocampista"] {
+            background: rgba(200, 241, 53, 0.15);
+            color: var(--lime);
+        }
+        .sq-role[data-ruolo="Attaccante"],
+        .sq-role[data-ruolo="attaccante"] {
+            background: rgba(224, 92, 92, 0.15);
+            color: var(--red);
         }
 
-        .role {
-            color: #2980b9;
-            font-weight: bold;
+        .sq-empty {
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            padding: 20px 0;
+            font-style: normal;
         }
+
+        .sq-back-footer {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 10px 18px;
+            background: var(--lime);
+            color: var(--pitch);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: .04em;
+            transition: opacity .15s;
+        }
+        .sq-back-footer:hover { opacity: .85; }
     </style>
 </head>
 
 <body>
 
-<div class="container">
+    <!-- ── hero ── -->
+    <header class="sq-hero">
+        <div class="sq-hero-inner">
+            <a class="sq-back" href="/tornei">← Tornei</a>
+            <div class="sq-badge">Squadra</div>
+            <h1 class="sq-title" th:text="${squadra.nome}">Nome Squadra</h1>
 
-    <h1 th:text="${squadra.nome}">Nome Squadra</h1>
+            <div class="sq-meta">
+                <div class="sq-meta-item">
+                    <span class="sq-meta-label">Città</span>
+                    <span class="sq-meta-value" th:text="${squadra.citta}">—</span>
+                </div>
+                <div class="sq-meta-item">
+                    <span class="sq-meta-label">Anno fondazione</span>
+                    <span class="sq-meta-value" th:text="${squadra.annoFondazione}">—</span>
+                </div>
+            </div>
+        </div>
+    </header>
 
-    <p>
-        <strong>Città:</strong>
-        <span th:text="${squadra.citta}"></span>
-    </p>
+    <!-- ── body ── -->
+    <div class="sq-body">
+        <section class="sq-card">
+            <div class="sq-card-head">
+                <span class="sq-card-icon">⚽</span>
+                <h2 class="sq-card-title"
+                    th:text="${'Giocatori — ' + #lists.size(giocatori)}">Giocatori</h2>
+            </div>
+            <div class="sq-card-body">
 
-    <p>
-        <strong>Anno fondazione:</strong>
-        <span th:text="${squadra.annoFondazione}"></span>
-    </p>
+                <div th:if="${#lists.isEmpty(giocatori)}" class="sq-empty">
+                    Nessun giocatore registrato
+                </div>
 
-    <hr>
+                <ul class="sq-players" th:unless="${#lists.isEmpty(giocatori)}">
+                    <li class="sq-player" th:each="g : ${giocatori}">
+                        <span class="sq-player-name"
+                              th:text="${g.nome} + ' ' + ${g.cognome}">Nome Cognome</span>
+                        <span class="sq-role" th:text="${g.ruolo}" th:attr="data-ruolo=${g.ruolo}">Ruolo</span>
+                    </li>
+                </ul>
 
-    <h2>Giocatori</h2>
+            </div>
+        </section>
 
-    <div th:if="${#lists.isEmpty(giocatori)}" class="empty">
-        Nessun giocatore registrato
+        <a class="sq-back-footer" href="/tornei">← Torna ai tornei</a>
     </div>
-
-    <ul>
-        <li th:each="g : ${giocatori}">
-            <span>
-                <strong th:text="${g.nome} + ' ' + ${g.cognome}"></strong>
-            </span>
-            <span class="role" th:text="${g.ruolo}"></span>
-        </li>
-    </ul>
-
-	
-	<div class="back">
-	    <a href="/tornei"
-	       style="display:inline-block;
-	              margin-top:20px;
-	              padding:10px 14px;
-	              background:#0d6efd;
-	              color:white;
-	              border-radius:8px;
-	              text-decoration:none;">
-	        ← Indietro
-	    </a>
-	</div>
-	
-</div>
 
 </body>
 </html>

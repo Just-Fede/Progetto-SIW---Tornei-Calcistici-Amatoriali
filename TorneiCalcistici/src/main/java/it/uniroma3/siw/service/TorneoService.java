@@ -54,7 +54,14 @@ public class TorneoService
 	private PartitaDTO mapPartita(Partita partita) {
 		String squadraCasa = partita.getSquadraHome() != null ? partita.getSquadraHome().getNome() : null;
 		String squadraOspite = partita.getSquadraAway() != null ? partita.getSquadraAway().getNome() : null;
-		return new PartitaDTO(squadraCasa, squadraOspite, partita.getGoalsHome(), partita.getGoalsAway());
+		return new PartitaDTO(
+				partita.getId(), 
+				squadraCasa, 
+				squadraOspite, 
+				partita.getGoalsHome(), 
+				partita.getGoalsAway(),
+				partita.getDataOra()
+				);
 	}
 	
 	public List<Torneo> findAll()

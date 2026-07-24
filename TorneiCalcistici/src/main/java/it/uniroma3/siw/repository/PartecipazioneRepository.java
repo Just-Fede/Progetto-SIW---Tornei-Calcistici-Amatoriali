@@ -19,4 +19,6 @@ public interface PartecipazioneRepository
 	    WHERE p.torneo.id = :id
 	""")
 	List<Squadra> findSquadreByTorneo(@Param("id") Integer id);
+
+    List<Partecipazione> findBySquadraId(int id);
 }

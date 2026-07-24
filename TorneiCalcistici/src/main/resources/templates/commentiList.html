@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -7,91 +7,378 @@
     <title>Commenti</title>
 
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --pitch:   #0a3d1f;
+            --grass:   #11562b;
+            --lime:    #c8f135;
+            --white:   #f5f7f0;
+            --muted:   #8a9b80;
+            --surface: #0e2a14;
+            --card:    #122e18;
+            --border:  #1f4726;
+            --gold:    #f5c842;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
+            font-family: 'Inter', sans-serif;
+            background: var(--pitch);
+            color: var(--white);
             margin: 0;
-            padding: 20px;
-            background: #f4f4f4;
-            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            padding-bottom: 60px;
         }
 
-        .commento {
-            border: 1px solid #ddd;
-            padding: 12px;
+        /* ── hero ── */
+        .cl-hero {
+            background: var(--grass);
+            background-image:
+                repeating-linear-gradient(90deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 48px),
+                repeating-linear-gradient(0deg, rgba(255,255,255,.03) 0px, rgba(255,255,255,.03) 1px, transparent 1px, transparent 48px);
+            padding: 48px 32px 36px;
+            border-bottom: 2px solid var(--lime);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cl-hero::after {
+            content: "💬";
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 160px;
+            opacity: 0.06;
+            pointer-events: none;
+            line-height: 1;
+        }
+
+        .cl-hero-inner {
+            max-width: 640px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .cl-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            color: var(--lime);
+            text-decoration: none;
+            margin-bottom: 20px;
+            opacity: .8;
+            transition: opacity .15s;
+        }
+        .cl-back:hover { opacity: 1; }
+
+        .cl-badge {
+            display: inline-block;
+            background: var(--lime);
+            color: var(--pitch);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 2px;
             margin-bottom: 10px;
+        }
+
+        .cl-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(36px, 7vw, 56px);
+            letter-spacing: .03em;
+            line-height: .95;
+            margin: 0;
+            color: var(--white);
+        }
+
+        /* ── body ── */
+        .cl-body {
+            max-width: 640px;
+            margin: 32px auto 0;
+            padding: 0 32px;
+        }
+
+        @media (max-width: 600px) {
+            .cl-hero { padding: 32px 16px 24px; }
+            .cl-body { padding: 0 16px; }
+        }
+
+        /* ── match card ── */
+        .cl-match-card {
+            background: var(--card);
+            border: 1px solid var(--border);
             border-radius: 8px;
-            background: #f9f9f9;
+            padding: 20px 18px;
+            margin-bottom: 24px;
         }
 
-        .commento .utente {
-            font-weight: bold;
-            margin-bottom: 6px;
+        .cl-match-teams {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
 
-        .commento .testo {
+        .cl-match-team {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 700;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .cl-match-team.away { text-align: right; }
+
+        .cl-match-score {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 6px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 24px;
+            letter-spacing: .06em;
+            color: var(--lime);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .cl-match-score-sep { color: var(--muted); font-size: 18px; }
+
+        .cl-match-ref {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 14px 0 0;
+            padding-top: 14px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .cl-match-ref strong {
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        /* ── comment cards ── */
+        .cl-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .cl-comment {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+        }
+
+        .cl-comment-head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .cl-avatar {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--lime);
+            color: var(--pitch);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .cl-utente {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--lime);
+        }
+
+        .cl-testo {
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--white);
             margin-bottom: 10px;
         }
 
-        .commento button {
-            padding: 6px 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
+        .cl-edit-wrap {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .cl-edit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
             border-radius: 6px;
             cursor: pointer;
+            transition: background .15s, color .15s;
+        }
+        .cl-edit-btn:hover {
+            background: var(--border);
+            color: var(--white);
         }
 
-        .commento button:hover {
-            background-color: #0056b3;
+        .cl-login-prompt {
+            text-align: center;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 28px 20px;
+            margin-bottom: 24px;
         }
 
-        .back {
-            margin-top: 20px;
+        .cl-login-prompt p {
+            font-size: 14px;
+            color: var(--muted);
+            margin: 0 0 14px;
         }
+
+        .cl-empty {
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            padding: 24px 0;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        /* ── actions ── */
+        .cl-add-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 18px;
+            background: var(--lime);
+            color: var(--pitch);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            letter-spacing: .02em;
+            transition: opacity .15s;
+        }
+        .cl-add-btn:hover { opacity: .85; }
+
+        .cl-back-footer {
+            display: inline-block;
+            margin-top: 14px;
+            padding: 10px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--white);
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: background .15s;
+        }
+        .cl-back-footer:hover { background: var(--border); }
     </style>
+</head>
 
 <body>
-    <!-- Lista commenti -->
-    <div th:if="${!#lists.isEmpty(commenti)}">
 
-        <div th:each="commento : ${commenti}" style="border:1px solid #ddd;
-                padding:12px;
-                margin-bottom:10px;
-                border-radius:8px;
-                background:#f9f9f9;">
+    <!-- ── hero ── -->
+    <header class="cl-hero">
+        <div class="cl-hero-inner">
+            <a class="cl-back" href="/tornei">← Tornei</a>
+            <div class="cl-badge">Partita</div>
+            <h1 class="cl-title">Commenti</h1>
+        </div>
+    </header>
 
-            <!-- Utente -->
-            <div style="font-weight:bold; margin-bottom:6px;">
-                <span th:text="${commento.utente.username}">
-                    Utente
+    <!-- ── match info ── -->
+    <div class="cl-body">
+        <div class="cl-match-card">
+            <div class="cl-match-teams">
+                <span class="cl-match-team" th:text="${partita.squadraHome.nome}">Squadra Casa</span>
+                <span class="cl-match-score">
+                    <span th:text="${partita.goalsHome}">0</span>
+                    <span class="cl-match-score-sep">:</span>
+                    <span th:text="${partita.goalsAway}">0</span>
                 </span>
+                <span class="cl-match-team away" th:text="${partita.squadraAway.nome}">Squadra Ospite</span>
             </div>
-
-            <!-- Testo commento -->
-            <div th:text="${commento.testo}">
-                Testo commento
+            <div class="cl-match-ref">
+                Arbitro:
+                <strong>
+                    <span th:text="${partita.arbitro.nome}">Nome</span>
+                    <span th:text="${partita.arbitro.cognome}">Cognome</span>
+                </strong>
             </div>
+        </div>
+    </div>
 
-            <a th:if="${commento.utente.username == utenteLoggato}"
-                th:href="@{/commentoModifica/{id}(id=${commento.id})}">
-                <button type="button">✏️ Modifica</button>
-            </a>
+    <!-- ── login prompt ── -->
+    <div class="cl-body" th:if="${utenteLoggato == null}">
+        <div class="cl-login-prompt">
+            <p>Per accedere ai commenti effettua il login</p>
+            <a href="/login" class="cl-add-btn">Accedi</a>
+        </div>
+    </div>
+
+    <!-- ── comments ── -->
+    <div class="cl-body" th:if="${utenteLoggato != null}">
+
+        <div th:if="${#lists.isEmpty(partita.commenti)}" class="cl-empty">
+            Nessun commento ancora. Sii il primo a scriverne uno!
         </div>
 
+        <div class="cl-list" th:unless="${#lists.isEmpty(partita.commenti)}">
+            <div class="cl-comment" th:each="commento : ${partita.commenti}">
 
-    </div>
-        <a th:href="@{'/commentoNew/' + ${pid}}"
-            style="display:inline-block; padding:8px 12px; background:#0d6efd; color:white; border-radius:6px; text-decoration:none;">
-            Aggiungi Commento </a>
+                <div class="cl-comment-head">
+                    <span class="cl-avatar"
+                          th:text="${#strings.substring(commento.utente.username, 0, 1)}">U</span>
+                    <span class="cl-utente" th:text="${commento.utente.username}">Utente</span>
+                </div>
+
+                <div class="cl-testo" th:text="${commento.testo}">Testo commento</div>
+
+                <div class="cl-edit-wrap" th:if="${commento.utente.username == utenteLoggato}">
+                    <a th:href="@{/commentoModifica/{id}(id=${commento.id})}">
+                        <button type="button" class="cl-edit-btn">✏️ Modifica</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <a th:href="@{'/commentoNew/' + ${partita.id}}" class="cl-add-btn">
+            + Aggiungi commento
+        </a>
 
         <div class="back">
-            <a href="/tornei" style="display:inline-block;
-	              margin-top:20px;
-	              padding:10px 14px;
-	              background:#0d6efd;
-	              color:white;
-	              border-radius:8px;
-	              text-decoration:none;">
-                ← Indietro
-            </a>
+            <a href="/tornei" class="cl-back-footer">← Indietro</a>
         </div>
+    </div>
+
 </body>
+
+</html>

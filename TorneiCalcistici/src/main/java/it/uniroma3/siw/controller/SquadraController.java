@@ -19,7 +19,6 @@ public class SquadraController
 {
 	
 	private final SquadraService squadraService;
-	private final SquadraRepository squadraRepository;
 	private final PartitaRepository partitaRepository;
 	private final GiocatoreRepository giocatoreRepository;
 	
@@ -32,7 +31,6 @@ public class SquadraController
 			)
 	{
 		this.squadraService = squadraService;
-		this.squadraRepository = squadraRepository;
 		this.giocatoreRepository = giocatoreRepository;
 		this.partitaRepository = partitaRepository;
 	}
@@ -42,8 +40,8 @@ public class SquadraController
 	{
 		model.addAttribute("squadra",this.squadraService.findById(id));
 		
-		model.addAttribute("giocatori", this.squadraService.getRepository().findAllGiocatori(id));
-		return "squadre/show";
+		model.addAttribute("giocatori", this.squadraService.findAllGiocatori(id));
+		return "/squadre/show";
 	}
 	
 	// SQUADRA //////////////////////////////////////////////////////////////////////////////
@@ -58,28 +56,28 @@ public class SquadraController
 	@PostMapping("/squadre")
 	public String squadraNew(@ModelAttribute("squadra") Squadra squadra)
 	{
-		this.squadraRepository.save(squadra);
+		this.squadraService.save(squadra);
 	    return "redirect:/squadre/" + squadra.getId();	
 	    }
 	
 	@GetMapping("/squadraListModifica")
 	public String squadraList (Model model)
 	{
-		model.addAttribute("squadre", this.squadraRepository.findAll());
+		model.addAttribute("squadre", this.squadraService.findAll());
 		return("/admin/squadre/squadraListModifica");
 	}
 	
 	@GetMapping("/squadraModifica/{id}")
 	public String squadraModifica (@PathVariable("id") int id, Model model)
 	{
-		model.addAttribute("squadra", this.squadraRepository.findById(id));
+		model.addAttribute("squadra", this.squadraService.findById(id));
 		return"/admin/squadre/squadraModifica";
 	}
 	
 	@PostMapping("/squadraModifica")
 	public String squadraSalvaModifica (@ModelAttribute("squadra") Squadra squadra)
 	{
-		this.squadraRepository.save(squadra);
+		this.squadraService.save(squadra);
 		return"redirect:/squadraListModifica";
 	}
 	
@@ -92,7 +90,7 @@ public class SquadraController
 	    partitaRepository.deleteBySquadraHomeId(id);
 	    partitaRepository.deleteBySquadraAwayId(id);
 	    
-	    this.squadraRepository.deleteById(id);
+	    this.squadraService.deleteById(id);
 	    return "redirect:/squadraListModifica";
 	}
 	

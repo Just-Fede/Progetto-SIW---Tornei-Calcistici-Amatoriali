@@ -33,16 +33,15 @@ public class CommentoController {
     }
 
     @GetMapping("/commenti/{id}")
-    public String show(@PathVariable("id") int id, Model model) {
-
-        Authentication auth
-                = SecurityContextHolder.getContext().getAuthentication();
+    public String show(@PathVariable("id") int id, Model model) 
+    {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        boolean loggato = auth != null && auth.isAuthenticated()
+                && !(auth instanceof org.springframework.security.authentication.AnonymousAuthenticationToken);
 
         Partita p = partitaRepository.findById(id).orElse(null);
-
-        model.addAttribute("commenti", p.getCommenti());
-        model.addAttribute("pid", p.getId());
-        model.addAttribute("utenteLoggato", auth.getName());
+        model.addAttribute("partita", p);
+        model.addAttribute("utenteLoggato", loggato ? auth.getName() : null);
 
         return "/commentiList";
     }
