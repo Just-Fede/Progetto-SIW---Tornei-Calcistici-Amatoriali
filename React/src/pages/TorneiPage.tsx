@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import { getTornei } from "../services/api";
 import { Link } from "react-router-dom";
 
-type Torneo = {
-  id: number;
-  nome: string;
-  anno: number;
-};
+import type { Torneo } from "../types/Torneo";
 
 const CSS = `
   @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
