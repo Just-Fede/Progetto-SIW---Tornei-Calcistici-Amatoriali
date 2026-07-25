@@ -460,7 +460,7 @@ export default function TorneoPage() {
           <section className="tp-card">
             <div className="tp-card-head">
               <span className="tp-card-icon">🛡</span>
-              <h2 className="tp-card-title">Squadre iscritte — {squadre.length}</h2>
+              <h2 className="tp-card-title">Squadre iscritte</h2>
             </div>
             <div className="tp-card-body">
               {squadre.length > 0 ? (
@@ -491,7 +491,7 @@ export default function TorneoPage() {
           <section className="tp-card">
             <div className="tp-card-head">
               <span className="tp-card-icon">📅</span>
-              <h2 className="tp-card-title">Calendario — {partite.length} partite</h2>
+              <h2 className="tp-card-title">Calendario partite</h2>
             </div>
             <div className="tp-card-body">
               {partite.length > 0 ? (

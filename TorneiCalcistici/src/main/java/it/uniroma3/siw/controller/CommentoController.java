@@ -91,6 +91,12 @@ public class CommentoController {
 
         Commento c = commentoService.findById(id);
 
+        if(testo == "")
+        {
+        	this.commentoService.deleteById(id);
+        	return "redirect:/commenti/" + c.getPartita().getId();
+        }
+
         c.setTesto(testo);
 
         commentoService.save(c);

@@ -94,4 +94,5 @@ public class SquadraController
 	    return "redirect:/squadraListModifica";
 	}
 	
+	
 }

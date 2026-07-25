@@ -33,4 +33,10 @@ public class CommentoService
     {
         return repository.save(commento);
     }
+
+	public void deleteById(Integer id) 
+	{
+		this.repository.deleteById(id);
+		
+	}
 }

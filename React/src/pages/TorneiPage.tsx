@@ -240,10 +240,6 @@ export default function TorneiPage() {
         </header>
 
         <div className="tl-body">
-          {tornei.length > 0 && (
-            <p className="tl-count">{tornei.length} torneo{tornei.length !== 1 ? "i" : ""}</p>
-          )}
-
           <div className="tl-grid">
             {tornei.length > 0 ? (
               tornei.map(t => (
