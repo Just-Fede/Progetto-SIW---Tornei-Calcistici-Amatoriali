@@ -57,7 +57,8 @@ public class UtenteController
 public String registrazione(
         @RequestParam String username,
         @RequestParam String password,
-        @RequestParam String role
+        @RequestParam String role,
+        Model model
 ) {
 
     if (!role.equals(ADMIN_ROLE)) 
@@ -66,11 +67,16 @@ public String registrazione(
         role = DEFAULT_ROLE;
     }
 
+    if (utenteService.findByUsername(username) != null) {
+        model.addAttribute("errore", "Username già in uso, scegline un altro");
+        return "register";
+    }
+
     Utente u = new Utente();
     u.setUsername(username);
-    utenteService.save(u);
+    u = utenteService.save(u);
 
-    credenzialiService.register(username, password, role);
+    credenzialiService.register(username, password, role, u);
 
     return "redirect:/login";
 }

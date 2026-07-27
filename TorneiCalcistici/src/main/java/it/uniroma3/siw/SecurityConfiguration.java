@@ -2,6 +2,8 @@ package it.uniroma3.siw;
 
 import javax.sql.DataSource;
 
+import org.springframework.http.HttpMethod;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -43,8 +45,32 @@ public class SecurityConfiguration {
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(authorize -> {
 
-            authorize.requestMatchers("/admin/**")
-                    .hasAuthority(ADMIN_ROLE);
+            authorize.requestMatchers(
+                    "/admin", "/admin/**",
+
+                    // Giocatore
+                    "/giocatoreForm", "/giocatori",
+                    "/giocatoreListModifica", "/giocatoreModifica/**", "/giocatoreSalvaModifica",
+
+                    // Squadra - form e viste di gestione (NON "/squadre/**" intero:
+                    // "/squadre/{id}" e' presumibilmente una pagina di dettaglio pubblica)
+                    "/squadraForm",
+                    "/squadraListModifica", "/squadraModifica/**", "/squadraElimina/**",
+
+                    // Torneo - stessa attenzione per "/tornei/{id}"
+                    "/tornei/torneoForm",
+                    "/torneoListModifica", "/torneoModifica/**", "/torneoSalvaModifica",
+
+                    // Partita
+                    "/partitaForm", "/partite",
+                    "/partiteListModifica", "/partitaModifica/**",
+                    "/partitaListElimina", "/partitaElimina/**"
+            ).hasAuthority(ADMIN_ROLE);
+
+            // "/squadre" e "/tornei" senza id sono condivisi tra GET pubblico
+            // (lista) e POST di creazione (solo admin): li distinguo per metodo.
+            authorize.requestMatchers(HttpMethod.POST, "/squadre").hasAuthority(ADMIN_ROLE);
+            authorize.requestMatchers(HttpMethod.POST, "/tornei").hasAuthority(ADMIN_ROLE);
 
             authorize.requestMatchers(
                     "/home",

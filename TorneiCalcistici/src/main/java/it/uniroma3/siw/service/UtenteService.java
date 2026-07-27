@@ -21,6 +21,11 @@ public class UtenteService {
 		return repository.findById(id).get();
 	}
 	
+	public Utente findByUsername(String username)
+	{
+		return repository.findByUsername(username);
+	}
+	
 	
 	public List<Utente> findAll()
 	{

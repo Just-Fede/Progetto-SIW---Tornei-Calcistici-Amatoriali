@@ -4,6 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import it.uniroma3.siw.model.Credenziali;
+import it.uniroma3.siw.model.Utente;
 import it.uniroma3.siw.repository.CredenzialiRepository;
 
 @Service
@@ -30,7 +31,7 @@ public class CredenzialiService {
 		return this.credenzialiRepository.findByUsername(username).get();
 	}
 
-	public void register(String username, String password, String role) {
+	public void register(String username, String password, String role, Utente utente) {
 
 		Credenziali c = new Credenziali();
 		c.setUsername(username);
@@ -38,6 +39,8 @@ public class CredenzialiService {
 		c.setPassword(passwordEncoder.encode(password));
 
 		c.setRole(role);
+
+		c.setUtente(utente);
 
 		credenzialiRepository.save(c);
 	}
